@@ -13,7 +13,7 @@ export function Header({ totalBroadcasts }: HeaderProps) {
             <Radio className="text-white" size={20} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white">CousinFM</h1>
+            <h1 className="text-2xl font-bold text-white">CousinFM Audio Player</h1>
             <p className="text-cousin-light-gray text-sm">Radio Broadcasts</p>
           </div>
         </div>
