@@ -50,6 +50,17 @@ export default function Home() {
     setIsPlaying(!isPlaying);
   };
 
+  const handlePlayBroadcast = (broadcast: Broadcast) => {
+    if (selectedBroadcast?.id === broadcast.id) {
+      // If same broadcast, toggle play/pause
+      setIsPlaying(!isPlaying);
+    } else {
+      // If different broadcast, select it and start playing
+      setSelectedBroadcast(broadcast);
+      setIsPlaying(true);
+    }
+  };
+
   const handleError = (errorMessage: string) => {
     setError(errorMessage);
     setIsPlaying(false);
@@ -88,6 +99,8 @@ export default function Home() {
           broadcasts={broadcasts}
           selectedBroadcast={selectedBroadcast}
           onSelectBroadcast={handleSelectBroadcast}
+          onPlayBroadcast={handlePlayBroadcast}
+          isPlaying={isPlaying}
           isLoading={isLoading}
         />
         

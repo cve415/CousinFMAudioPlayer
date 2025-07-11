@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Broadcast } from "@/types/broadcast";
-import { FileAudio, FileVideo, ChevronDown } from "lucide-react";
+import { FileAudio, FileVideo, ChevronDown, Play, Pause } from "lucide-react";
 import { format } from "date-fns";
 
 interface BroadcastListProps {
   broadcasts: Broadcast[];
   selectedBroadcast: Broadcast | null;
   onSelectBroadcast: (broadcast: Broadcast) => void;
+  onPlayBroadcast: (broadcast: Broadcast) => void;
+  isPlaying: boolean;
   isLoading: boolean;
 }
 
@@ -14,6 +16,8 @@ export function BroadcastList({
   broadcasts,
   selectedBroadcast,
   onSelectBroadcast,
+  onPlayBroadcast,
+  isPlaying,
   isLoading,
 }: BroadcastListProps) {
   const [yearFilter, setYearFilter] = useState<string>("all");
@@ -98,8 +102,7 @@ export function BroadcastList({
         {displayedBroadcasts.map((broadcast, index) => (
           <div
             key={broadcast.id}
-            onClick={() => onSelectBroadcast(broadcast)}
-            className={`p-4 hover:bg-gray-700 cursor-pointer transition-colors ${
+            className={`p-4 hover:bg-gray-700 transition-colors ${
               selectedBroadcast?.id === broadcast.id
                 ? "border-l-4 border-cousin-orange bg-gray-700"
                 : "border-l-4 border-transparent"
@@ -117,7 +120,10 @@ export function BroadcastList({
                   {index + 1}
                 </span>
               </div>
-              <div className="flex-1 min-w-0">
+              <div 
+                className="flex-1 min-w-0 cursor-pointer"
+                onClick={() => onSelectBroadcast(broadcast)}
+              >
                 <h3 className="font-medium text-white truncate">
                   {broadcast.title}
                 </h3>
@@ -130,6 +136,19 @@ export function BroadcastList({
                   {getFileIcon(broadcast.title)}
                 </div>
               </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onPlayBroadcast(broadcast);
+                }}
+                className="flex-shrink-0 w-10 h-10 bg-cousin-orange hover:bg-orange-600 rounded-full flex items-center justify-center transition-colors"
+              >
+                {selectedBroadcast?.id === broadcast.id && isPlaying ? (
+                  <Pause className="text-white" size={16} />
+                ) : (
+                  <Play className="text-white" size={16} />
+                )}
+              </button>
             </div>
           </div>
         ))}
