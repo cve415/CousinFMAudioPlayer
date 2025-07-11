@@ -18,8 +18,11 @@ export default function Home() {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Load broadcasts from local JSON data
-    setBroadcasts(broadcastsData as Broadcast[]);
+    // Load broadcasts from local JSON data and sort by date (newest first)
+    const sortedBroadcasts = (broadcastsData as Broadcast[]).sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+    setBroadcasts(sortedBroadcasts);
     setIsLoading(false);
   }, []);
 

@@ -28,10 +28,12 @@ export function BroadcastList({
     new Set([...broadcasts.map((b) => new Date(b.date).getFullYear()), 2025])
   ).sort((a, b) => b - a);
 
-  const filteredBroadcasts = broadcasts.filter((broadcast) => {
-    if (yearFilter === "all") return true;
-    return new Date(broadcast.date).getFullYear().toString() === yearFilter;
-  });
+  const filteredBroadcasts = broadcasts
+    .filter((broadcast) => {
+      if (yearFilter === "all") return true;
+      return new Date(broadcast.date).getFullYear().toString() === yearFilter;
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   const displayedBroadcasts = filteredBroadcasts.slice(0, displayCount);
 
