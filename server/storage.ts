@@ -1,4 +1,6 @@
 import { broadcasts, type Broadcast, type InsertBroadcast } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 import broadcastData from "../attached_assets/cousinfm_playlist_1752208465676.json";
 
 export interface IStorage {
@@ -8,58 +10,55 @@ export interface IStorage {
   createBroadcast(broadcast: InsertBroadcast): Promise<Broadcast>;
 }
 
-export class MemStorage implements IStorage {
-  private broadcasts: Map<number, Broadcast>;
-  private currentId: number;
+export class DatabaseStorage implements IStorage {
+  private initialized = false;
 
-  constructor() {
-    this.broadcasts = new Map();
-    this.currentId = 1;
-    this.initializeBroadcasts();
-  }
-
-  private initializeBroadcasts() {
-    // Load broadcasts from JSON data
-    broadcastData.forEach((broadcast) => {
-      const id = this.currentId++;
-      const broadcastRecord: Broadcast = {
-        id,
+  async initialize() {
+    if (this.initialized) return;
+    
+    // Check if we have any broadcasts in the database
+    const existingBroadcasts = await db.select().from(broadcasts).limit(1);
+    
+    if (existingBroadcasts.length === 0) {
+      // Load broadcasts from JSON data into database
+      const broadcastsToInsert = broadcastData.map(broadcast => ({
         cid: broadcast.cid,
         title: broadcast.title,
         fileSizeMB: broadcast.fileSizeMB,
         date: broadcast.date,
-        createdAt: new Date(),
-      };
-      this.broadcasts.set(id, broadcastRecord);
-    });
+      }));
+      
+      await db.insert(broadcasts).values(broadcastsToInsert);
+    }
+    
+    this.initialized = true;
   }
 
   async getAllBroadcasts(): Promise<Broadcast[]> {
-    return Array.from(this.broadcasts.values()).sort((a, b) => 
-      new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    await this.initialize();
+    return await db.select().from(broadcasts).orderBy(broadcasts.date);
   }
 
   async getBroadcastById(id: number): Promise<Broadcast | undefined> {
-    return this.broadcasts.get(id);
+    await this.initialize();
+    const [broadcast] = await db.select().from(broadcasts).where(eq(broadcasts.id, id));
+    return broadcast || undefined;
   }
 
   async getBroadcastByCid(cid: string): Promise<Broadcast | undefined> {
-    return Array.from(this.broadcasts.values()).find(
-      (broadcast) => broadcast.cid === cid
-    );
+    await this.initialize();
+    const [broadcast] = await db.select().from(broadcasts).where(eq(broadcasts.cid, cid));
+    return broadcast || undefined;
   }
 
   async createBroadcast(insertBroadcast: InsertBroadcast): Promise<Broadcast> {
-    const id = this.currentId++;
-    const broadcast: Broadcast = {
-      ...insertBroadcast,
-      id,
-      createdAt: new Date(),
-    };
-    this.broadcasts.set(id, broadcast);
+    await this.initialize();
+    const [broadcast] = await db
+      .insert(broadcasts)
+      .values(insertBroadcast)
+      .returning();
     return broadcast;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
