@@ -129,11 +129,11 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious }: StreamingPlay
             {/* Background Image/Video */}
             <div className="absolute inset-0">
               <img
-                src={broadcast.imageCid ? `/attached_assets/${broadcast.imageCid}` : '/attached_assets/cousinfm-default-cover.svg'}
+                src={broadcast.imageCid ? `/attached_assets/${broadcast.imageCid}` : '/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png'}
                 alt={broadcast.title}
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  e.currentTarget.src = '/attached_assets/cousinfm-default-cover.svg';
+                  e.currentTarget.src = '/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png';
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
