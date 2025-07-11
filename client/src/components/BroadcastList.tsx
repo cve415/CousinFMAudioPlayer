@@ -112,7 +112,7 @@ export function BroadcastList({
               {broadcast.imageCid ? (
                 <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden">
                   <img
-                    src={`https://gateway.pinata.cloud/ipfs/${broadcast.imageCid}`}
+                    src={`/attached_assets/${broadcast.imageCid}`}
                     alt={broadcast.title}
                     className="w-full h-full object-cover"
                     onError={(e) => {
