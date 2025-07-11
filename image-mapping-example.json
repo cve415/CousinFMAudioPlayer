@@ -1,0 +1,7 @@
+{
+  "Qma9YJpugNaorhBnYwRWVTYnCbCzcZt8M6tcAbUzxupT88": "QmExampleImageCID1abc123...",
+  "QmNf4uHrJpLbTYKhLUpLuFfCjJSggjQNYA8tJJUzLH9CQJ": "QmExampleImageCID2def456...",
+  "QmPQxRa8hL9EKj3nQKhHiJTmkFHrVy8GrDbpPHrJpLbTYK": "QmExampleImageCID3ghi789...",
+  "QmComment": "Replace the broadcast CIDs above with your actual broadcast CIDs from the database",
+  "QmComment2": "Replace the image CIDs above with your actual IPFS image CIDs after upload"
+}

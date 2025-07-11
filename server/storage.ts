@@ -8,6 +8,7 @@ export interface IStorage {
   getBroadcastById(id: number): Promise<Broadcast | undefined>;
   getBroadcastByCid(cid: string): Promise<Broadcast | undefined>;
   createBroadcast(broadcast: InsertBroadcast): Promise<Broadcast>;
+  updateBroadcastImage(id: number, imageCid: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -58,6 +59,14 @@ export class DatabaseStorage implements IStorage {
       .values(insertBroadcast)
       .returning();
     return broadcast;
+  }
+
+  async updateBroadcastImage(id: number, imageCid: string): Promise<void> {
+    await this.initialize();
+    await db
+      .update(broadcasts)
+      .set({ imageCid })
+      .where(eq(broadcasts.id, id));
   }
 }
 

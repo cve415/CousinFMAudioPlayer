@@ -53,6 +53,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Batch update broadcast images
+  app.post("/api/broadcasts/batch-update-images", async (req, res) => {
+    try {
+      const imageMapping = req.body;
+      
+      if (!imageMapping || typeof imageMapping !== 'object') {
+        return res.status(400).json({ error: "Invalid mapping format. Expected object with broadcast CID keys and image CID values." });
+      }
+
+      const results = [];
+      let successCount = 0;
+      let errorCount = 0;
+
+      for (const [broadcastCid, imageCid] of Object.entries(imageMapping)) {
+        try {
+          const broadcast = await storage.getBroadcastByCid(broadcastCid);
+          if (!broadcast) {
+            results.push({ 
+              broadcastCid, 
+              status: 'error', 
+              message: `Broadcast with CID ${broadcastCid} not found` 
+            });
+            errorCount++;
+            continue;
+          }
+
+          await storage.updateBroadcastImage(broadcast.id, imageCid as string);
+          results.push({ 
+            broadcastCid, 
+            imageCid, 
+            status: 'success', 
+            broadcastTitle: broadcast.title 
+          });
+          successCount++;
+        } catch (error) {
+          results.push({ 
+            broadcastCid, 
+            status: 'error', 
+            message: `Failed to update: ${error instanceof Error ? error.message : 'Unknown error'}` 
+          });
+          errorCount++;
+        }
+      }
+
+      res.json({
+        summary: {
+          total: Object.keys(imageMapping).length,
+          success: successCount,
+          errors: errorCount
+        },
+        results
+      });
+    } catch (error) {
+      console.error("Error in batch update:", error);
+      res.status(500).json({ error: "Failed to process batch update" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
