@@ -8,6 +8,7 @@ export const broadcasts = pgTable("broadcasts", {
   title: text("title").notNull(),
   fileSizeMB: real("file_size_mb").notNull(),
   date: text("date").notNull(),
+  imageCid: text("image_cid"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

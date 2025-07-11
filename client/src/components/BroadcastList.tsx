@@ -109,17 +109,41 @@ export function BroadcastList({
             }`}
           >
             <div className="flex items-start space-x-3">
-              <div
-                className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                  selectedBroadcast?.id === broadcast.id
-                    ? "bg-cousin-orange"
-                    : "bg-gray-600"
-                }`}
-              >
-                <span className="text-white text-sm font-bold">
-                  {index + 1}
-                </span>
-              </div>
+              {broadcast.imageCid ? (
+                <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden">
+                  <img
+                    src={`https://gateway.pinata.cloud/ipfs/${broadcast.imageCid}`}
+                    alt={broadcast.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Fallback to numbered circle if image fails to load
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                    }}
+                  />
+                  <div className={`hidden w-16 h-16 rounded-lg flex items-center justify-center ${
+                    selectedBroadcast?.id === broadcast.id
+                      ? "bg-cousin-orange"
+                      : "bg-gray-600"
+                  }`}>
+                    <span className="text-white text-sm font-bold">
+                      {index + 1}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className={`flex-shrink-0 w-16 h-16 rounded-lg flex items-center justify-center ${
+                    selectedBroadcast?.id === broadcast.id
+                      ? "bg-cousin-orange"
+                      : "bg-gray-600"
+                  }`}
+                >
+                  <span className="text-white text-sm font-bold">
+                    {index + 1}
+                  </span>
+                </div>
+              )}
               <div 
                 className="flex-1 min-w-0 cursor-pointer"
                 onClick={() => onSelectBroadcast(broadcast)}
