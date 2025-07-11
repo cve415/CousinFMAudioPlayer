@@ -424,7 +424,7 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious }: StreamingPlay
               Welcome to CousinFM
             </h2>
             <p className="text-xl text-gray-400">
-              Select a broadcast from the library to begin your audio journey
+              Select a broadcast from the library to play previous broadcasts
             </p>
             <div className="mt-8">
               <WaveformVisualizer
