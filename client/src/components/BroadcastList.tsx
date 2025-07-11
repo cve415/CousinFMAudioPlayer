@@ -116,7 +116,7 @@ export function BroadcastList({
                   <img
                     src={broadcast.imageCid ? `/attached_assets/${broadcast.imageCid}` : '/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png'}
                     alt={broadcast.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover scale-110"
                     onError={(e) => {
                       e.currentTarget.src = '/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png';
                     }}

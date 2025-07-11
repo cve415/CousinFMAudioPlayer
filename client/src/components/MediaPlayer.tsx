@@ -232,6 +232,7 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
                       onError={(e) => {
                         // Fallback to San Francisco image if image fails to load
                         e.currentTarget.src = '/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png';
+                        e.currentTarget.className = 'w-full h-80 object-cover rounded-2xl shadow-2xl scale-110';
                       }}
                     />
                     <div className="hidden">
@@ -257,7 +258,7 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
                   <img
                     src="/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png"
                     alt="CousinFM San Francisco"
-                    className="w-full h-80 object-cover rounded-2xl shadow-2xl"
+                    className="w-full h-80 object-cover rounded-2xl shadow-2xl scale-110"
                   />
                 </div>
               )}
