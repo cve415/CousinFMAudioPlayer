@@ -22,7 +22,7 @@ Preferred communication style: Simple, everyday language.
 - **Runtime**: Node.js with Express.js
 - **Language**: TypeScript with ES modules
 - **Database**: PostgreSQL with Drizzle ORM
-- **Storage**: In-memory storage with fallback to database (hybrid approach)
+- **Storage**: Static JSON file (no database required)
 - **API**: RESTful endpoints for broadcast management
 
 ### Key Components
@@ -104,3 +104,5 @@ Preferred communication style: Simple, everyday language.
 - Added dynamic waveform visualizer for audio playback
 - Created generic CousinFM cover for broadcasts without artwork
 - Fixed broadcast title formatting issues (removed trailing 'Q' characters)
+- Converted to static version - no backend database required
+- All broadcast data loaded from JSON file for easy deployment
