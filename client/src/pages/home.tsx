@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { Broadcast } from "@/types/broadcast";
 import { Header } from "@/components/Header";
 import { BroadcastList } from "@/components/BroadcastList";
@@ -7,23 +6,22 @@ import { StreamingPlayer } from "@/components/StreamingPlayer";
 import { ErrorModal } from "@/components/ErrorModal";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { MobileControls } from "@/components/MobileControls";
-import { AudioTest } from "@/components/AudioTest";
 import { useToast } from "@/hooks/use-toast";
+import broadcastsData from "@/data/broadcasts.json";
 
 export default function Home() {
   const [selectedBroadcast, setSelectedBroadcast] = useState<Broadcast | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [broadcasts, setBroadcasts] = useState<Broadcast[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
-  const {
-    data: broadcasts = [],
-    isLoading,
-    error: queryError,
-    refetch,
-  } = useQuery<Broadcast[]>({
-    queryKey: ["/api/broadcasts"],
-  });
+  useEffect(() => {
+    // Load broadcasts from local JSON data
+    setBroadcasts(broadcastsData as Broadcast[]);
+    setIsLoading(false);
+  }, []);
 
   const handleSelectBroadcast = (broadcast: Broadcast) => {
     setSelectedBroadcast(broadcast);
@@ -68,27 +66,9 @@ export default function Home() {
 
   const handleRetry = () => {
     setError(null);
-    refetch();
+    // Reload broadcasts from JSON
+    setBroadcasts(broadcastsData as Broadcast[]);
   };
-
-  if (queryError) {
-    return (
-      <div className="min-h-screen bg-cousin-dark flex items-center justify-center">
-        <div className="text-center text-white">
-          <h2 className="text-2xl font-bold mb-4">Failed to load broadcasts</h2>
-          <p className="text-cousin-light-gray mb-4">
-            Please check your connection and try again.
-          </p>
-          <button
-            onClick={handleRetry}
-            className="bg-cousin-orange text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-black text-white">
