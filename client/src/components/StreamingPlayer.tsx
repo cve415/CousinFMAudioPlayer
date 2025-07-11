@@ -418,19 +418,32 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious }: StreamingPlay
           )}
         </div>
       ) : (
-        <div className="h-[70vh] flex items-center justify-center text-center">
-          <div className="space-y-4">
-            <h2 className="text-4xl font-bold text-gray-300">
-              CousinFM
-            </h2>
-            <p className="text-xl text-gray-400">
-              Select a broadcast from the library to play previous broadcasts
-            </p>
-            <div className="mt-8">
-              <WaveformVisualizer
-                isPlaying={false}
-                className="opacity-30"
-              />
+        <div className="relative h-[70vh] min-h-[500px] flex items-end">
+          {/* Default San Francisco Background */}
+          <div className="absolute inset-0">
+            <img
+              src="/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752215712592.png"
+              alt="CousinFM San Francisco"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+          </div>
+
+          {/* Content Overlay */}
+          <div className="relative z-10 w-full p-8 pb-12">
+            <div className="max-w-4xl">
+              <h2 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white">
+                CousinFM
+              </h2>
+              <p className="text-xl text-gray-300 mb-8">
+                Select a broadcast from our archives
+              </p>
+              <div className="mt-8">
+                <WaveformVisualizer
+                  isPlaying={false}
+                  className="opacity-30"
+                />
+              </div>
             </div>
           </div>
         </div>
