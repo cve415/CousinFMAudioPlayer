@@ -216,20 +216,53 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
             </div>
           ) : (
             <div className="mb-12 text-center">
-              <div className="w-full max-w-2xl mx-auto h-48 bg-gray-800 rounded-2xl flex items-end justify-center space-x-2 p-6 shadow-xl">
-                {[...Array(24)].map((_, i) => (
-                  <div
-                    key={i}
-                    className={`w-3 rounded-full ${
-                      i % 3 === 0 ? "bg-cousin-orange" : "bg-gray-600"
-                    }`}
-                    style={{
-                      height: `${Math.random() * 100 + 30}px`,
-                      animation: playerState.isPlaying ? `pulse ${Math.random() * 2 + 1}s infinite` : "none",
-                    }}
-                  />
-                ))}
-              </div>
+              {broadcast.imageCid ? (
+                <div className="max-w-md mx-auto">
+                  <div className="relative">
+                    <img
+                      src={`https://gateway.pinata.cloud/ipfs/${broadcast.imageCid}`}
+                      alt={broadcast.title}
+                      className="w-full h-80 object-cover rounded-2xl shadow-2xl"
+                      onError={(e) => {
+                        // Fallback to audio visualizer if image fails to load
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                      }}
+                    />
+                    <div className="hidden">
+                      <div className="w-full h-80 bg-gray-800 rounded-2xl flex items-end justify-center space-x-2 p-6 shadow-xl">
+                        {[...Array(24)].map((_, i) => (
+                          <div
+                            key={i}
+                            className={`w-3 rounded-full ${
+                              i % 3 === 0 ? "bg-cousin-orange" : "bg-gray-600"
+                            }`}
+                            style={{
+                              height: `${Math.random() * 100 + 30}px`,
+                              animation: playerState.isPlaying ? `pulse ${Math.random() * 2 + 1}s infinite` : "none",
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full max-w-2xl mx-auto h-48 bg-gray-800 rounded-2xl flex items-end justify-center space-x-2 p-6 shadow-xl">
+                  {[...Array(24)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`w-3 rounded-full ${
+                        i % 3 === 0 ? "bg-cousin-orange" : "bg-gray-600"
+                      }`}
+                      style={{
+                        height: `${Math.random() * 100 + 30}px`,
+                        animation: playerState.isPlaying ? `pulse ${Math.random() * 2 + 1}s infinite` : "none",
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           )}
 

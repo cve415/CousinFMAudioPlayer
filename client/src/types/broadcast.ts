@@ -4,6 +4,7 @@ export interface Broadcast {
   title: string;
   fileSizeMB: number;
   date: string;
+  imageCid?: string;
   createdAt: Date;
 }
 
