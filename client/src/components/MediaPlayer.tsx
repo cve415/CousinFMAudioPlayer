@@ -220,7 +220,7 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
                 <div className="max-w-md mx-auto">
                   <div className="relative">
                     <img
-                      src={`https://gateway.pinata.cloud/ipfs/${broadcast.imageCid}`}
+                      src={`/attached_assets/${broadcast.imageCid}`}
                       alt={broadcast.title}
                       className="w-full h-80 object-cover rounded-2xl shadow-2xl"
                       onError={(e) => {
