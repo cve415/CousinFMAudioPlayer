@@ -131,7 +131,7 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious }: StreamingPlay
               <img
                 src={broadcast.imageCid ? `/attached_assets/${broadcast.imageCid}` : '/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png'}
                 alt={broadcast.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover scale-110"
                 onError={(e) => {
                   e.currentTarget.src = '/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png';
                 }}
@@ -424,7 +424,7 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious }: StreamingPlay
             <img
               src="/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752215712592.png"
               alt="CousinFM San Francisco"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
           </div>
