@@ -25,7 +25,7 @@ export function BroadcastList({
   const [displayCount, setDisplayCount] = useState(20);
 
   const years = Array.from(
-    new Set(broadcasts.map((b) => new Date(b.date).getFullYear()))
+    new Set([...broadcasts.map((b) => new Date(b.date).getFullYear()), 2025])
   ).sort((a, b) => b - a);
 
   const filteredBroadcasts = broadcasts.filter((broadcast) => {
@@ -70,7 +70,7 @@ export function BroadcastList({
   return (
     <aside className="w-full lg:w-80 xl:w-96 bg-black/90 backdrop-blur-sm border-r border-gray-800 overflow-y-auto">
       <div className="p-6 border-b border-gray-800">
-        <h2 className="text-xl font-bold mb-6 text-white">Broadcast Library</h2>
+        <h2 className="text-xl font-bold mb-6 text-white">CousinFM Archive</h2>
         
         <div className="flex flex-wrap gap-2 mb-6">
           <button
@@ -153,6 +153,7 @@ export function BroadcastList({
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
+                    onSelectBroadcast(broadcast);
                     onPlayBroadcast(broadcast);
                   }}
                   className={`w-12 h-12 rounded-full flex items-center justify-center transition-all shadow-lg ${
