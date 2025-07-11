@@ -6,6 +6,8 @@ import {
   SkipBack,
   SkipForward,
   Volume2,
+  VolumeX,
+  Info,
   Share,
   Download,
   Shuffle,
@@ -13,6 +15,10 @@ import {
   Rewind,
   FastForward,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
+import { Badge } from "@/components/ui/badge";
+import { WaveformVisualizer } from "./WaveformVisualizer";
 import { useToast } from "@/hooks/use-toast";
 
 interface MediaPlayerProps {
