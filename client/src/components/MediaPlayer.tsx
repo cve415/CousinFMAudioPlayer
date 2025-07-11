@@ -230,9 +230,8 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
                       alt={broadcast.title}
                       className="w-full h-80 object-cover rounded-2xl shadow-2xl"
                       onError={(e) => {
-                        // Fallback to audio visualizer if image fails to load
-                        e.currentTarget.style.display = 'none';
-                        e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                        // Fallback to San Francisco image if image fails to load
+                        e.currentTarget.src = '/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png';
                       }}
                     />
                     <div className="hidden">
@@ -254,19 +253,12 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
                   </div>
                 </div>
               ) : (
-                <div className="w-full max-w-2xl mx-auto h-48 bg-gray-800 rounded-2xl flex items-end justify-center space-x-2 p-6 shadow-xl">
-                  {[...Array(24)].map((_, i) => (
-                    <div
-                      key={i}
-                      className={`w-3 rounded-full ${
-                        i % 3 === 0 ? "bg-cousin-orange" : "bg-gray-600"
-                      }`}
-                      style={{
-                        height: `${Math.random() * 100 + 30}px`,
-                        animation: playerState.isPlaying ? `pulse ${Math.random() * 2 + 1}s infinite` : "none",
-                      }}
-                    />
-                  ))}
+                <div className="max-w-md mx-auto">
+                  <img
+                    src="/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png"
+                    alt="CousinFM San Francisco"
+                    className="w-full h-80 object-cover rounded-2xl shadow-2xl"
+                  />
                 </div>
               )}
             </div>
