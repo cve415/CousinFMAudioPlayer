@@ -421,10 +421,10 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious }: StreamingPlay
         <div className="h-[70vh] flex items-center justify-center text-center">
           <div className="space-y-4">
             <h2 className="text-4xl font-bold text-gray-300">
-              Welcome to CousinFM
+              CousinFM
             </h2>
             <p className="text-xl text-gray-400">
-              Select a broadcast from our Archives
+              Select a broadcast from the library to play previous broadcasts
             </p>
             <div className="mt-8">
               <WaveformVisualizer
