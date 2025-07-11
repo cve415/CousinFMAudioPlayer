@@ -7,6 +7,7 @@ import { MediaPlayer } from "@/components/MediaPlayer";
 import { ErrorModal } from "@/components/ErrorModal";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { MobileControls } from "@/components/MobileControls";
+import { AudioTest } from "@/components/AudioTest";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Home() {
@@ -90,12 +91,17 @@ export default function Home() {
           isLoading={isLoading}
         />
         
-        <MediaPlayer
-          broadcast={selectedBroadcast}
-          onNext={handleNext}
-          onPrevious={handlePrevious}
-          broadcasts={broadcasts}
-        />
+        <div className="flex-1 flex flex-col">
+          <div className="p-4 border-b border-gray-700">
+            <AudioTest />
+          </div>
+          <MediaPlayer
+            broadcast={selectedBroadcast}
+            onNext={handleNext}
+            onPrevious={handlePrevious}
+            broadcasts={broadcasts}
+          />
+        </div>
       </div>
 
       <MobileControls
