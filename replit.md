@@ -100,3 +100,7 @@ Preferred communication style: Simple, everyday language.
 - Added image support infrastructure ready for IPFS image integration
 - Enhanced playlist with thumbnail image display capabilities
 - Functional play buttons on individual broadcast items
+- Implemented Netflix-style streaming interface with hero sections
+- Added dynamic waveform visualizer for audio playback
+- Created generic CousinFM cover for broadcasts without artwork
+- Fixed broadcast title formatting issues (removed trailing 'Q' characters)

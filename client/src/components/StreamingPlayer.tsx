@@ -127,22 +127,17 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious }: StreamingPlay
           {/* Hero Section with Large Artwork */}
           <div className="relative h-[70vh] min-h-[500px] flex items-end">
             {/* Background Image/Video */}
-            {broadcast.imageCid ? (
-              <div className="absolute inset-0">
-                <img
-                  src={`/attached_assets/${broadcast.imageCid}`}
-                  alt={broadcast.title}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-              </div>
-            ) : (
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black" />
-            )}
+            <div className="absolute inset-0">
+              <img
+                src={broadcast.imageCid ? `/attached_assets/${broadcast.imageCid}` : '/attached_assets/cousinfm-default-cover.svg'}
+                alt={broadcast.title}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = '/attached_assets/cousinfm-default-cover.svg';
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+            </div>
 
             {/* Content Overlay */}
             <div className="relative z-10 w-full p-8 pb-12">
