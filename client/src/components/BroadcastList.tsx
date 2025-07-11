@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Broadcast } from "@/types/broadcast";
 import { FileAudio, FileVideo, ChevronDown, Play, Pause } from "lucide-react";
 import { format } from "date-fns";
+import { WaveformVisualizer } from "./WaveformVisualizer";
 
 interface BroadcastListProps {
   broadcasts: Broadcast[];
@@ -67,29 +68,29 @@ export function BroadcastList({
   }
 
   return (
-    <aside className="w-full lg:w-80 xl:w-96 bg-cousin-gray border-r border-gray-700 overflow-y-auto">
-      <div className="p-4 border-b border-gray-700">
-        <h2 className="text-lg font-semibold mb-4 text-white">Broadcast Library</h2>
+    <aside className="w-full lg:w-80 xl:w-96 bg-black/90 backdrop-blur-sm border-r border-gray-800 overflow-y-auto">
+      <div className="p-6 border-b border-gray-800">
+        <h2 className="text-xl font-bold mb-6 text-white">Broadcast Library</h2>
         
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2 mb-6">
           <button
             onClick={() => setYearFilter("all")}
-            className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
               yearFilter === "all"
-                ? "bg-cousin-orange text-white"
-                : "bg-gray-700 text-cousin-light-gray hover:bg-gray-600"
+                ? "bg-cousin-orange text-black"
+                : "bg-gray-800 text-gray-300 hover:bg-gray-700"
             }`}
           >
-            All
+            All Years
           </button>
           {years.map((year) => (
             <button
               key={year}
               onClick={() => setYearFilter(year.toString())}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 yearFilter === year.toString()
-                  ? "bg-cousin-orange text-white"
-                  : "bg-gray-700 text-cousin-light-gray hover:bg-gray-600"
+                  ? "bg-cousin-orange text-black"
+                  : "bg-gray-800 text-gray-300 hover:bg-gray-700"
               }`}
             >
               {year}
@@ -98,94 +99,115 @@ export function BroadcastList({
         </div>
       </div>
 
-      <div className="divide-y divide-gray-700">
+      <div className="p-4 space-y-4">
         {displayedBroadcasts.map((broadcast, index) => (
           <div
             key={broadcast.id}
-            className={`p-4 hover:bg-gray-700 transition-colors ${
+            className={`group relative rounded-xl transition-all duration-300 cursor-pointer hover:scale-105 ${
               selectedBroadcast?.id === broadcast.id
-                ? "border-l-4 border-cousin-orange bg-gray-700"
-                : "border-l-4 border-transparent"
+                ? "bg-gradient-to-r from-cousin-orange/20 to-orange-600/20 border-2 border-cousin-orange"
+                : "bg-gray-900/50 border border-gray-700 hover:bg-gray-800/50 hover:border-gray-600"
             }`}
           >
-            <div className="flex items-start space-x-3">
-              {broadcast.imageCid ? (
-                <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden">
-                  <img
-                    src={`/attached_assets/${broadcast.imageCid}`}
-                    alt={broadcast.title}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      // Fallback to numbered circle if image fails to load
-                      e.currentTarget.style.display = 'none';
-                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                    }}
-                  />
-                  <div className={`hidden w-16 h-16 rounded-lg flex items-center justify-center ${
+            <div className="p-4">
+              <div className="flex items-start space-x-4">
+                {/* Large Artwork */}
+                {broadcast.imageCid ? (
+                  <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden shadow-lg">
+                    <img
+                      src={`/attached_assets/${broadcast.imageCid}`}
+                      alt={broadcast.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                      }}
+                    />
+                    <div className={`hidden w-20 h-20 rounded-lg flex items-center justify-center ${
+                      selectedBroadcast?.id === broadcast.id
+                        ? "bg-cousin-orange"
+                        : "bg-gray-700"
+                    }`}>
+                      <span className="text-white text-lg font-bold">
+                        {index + 1}
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className={`flex-shrink-0 w-20 h-20 rounded-lg flex items-center justify-center ${
                     selectedBroadcast?.id === broadcast.id
                       ? "bg-cousin-orange"
-                      : "bg-gray-600"
+                      : "bg-gray-700"
                   }`}>
-                    <span className="text-white text-sm font-bold">
+                    <span className="text-white text-lg font-bold">
                       {index + 1}
                     </span>
                   </div>
-                </div>
-              ) : (
-                <div
-                  className={`flex-shrink-0 w-16 h-16 rounded-lg flex items-center justify-center ${
-                    selectedBroadcast?.id === broadcast.id
-                      ? "bg-cousin-orange"
-                      : "bg-gray-600"
-                  }`}
-                >
-                  <span className="text-white text-sm font-bold">
-                    {index + 1}
-                  </span>
-                </div>
-              )}
-              <div 
-                className="flex-1 min-w-0 cursor-pointer"
-                onClick={() => onSelectBroadcast(broadcast)}
-              >
-                <h3 className="font-medium text-white truncate">
-                  {broadcast.title}
-                </h3>
-                <p className="text-cousin-light-gray text-sm mt-1">
-                  {formatDate(broadcast.date)}
-                </p>
-                <div className="flex items-center space-x-2 mt-2 text-xs text-cousin-light-gray">
-                  <span>{broadcast.fileSizeMB} MB</span>
-                  <span>•</span>
-                  {getFileIcon(broadcast.title)}
+                )}
+                
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-white text-lg leading-tight mb-2 line-clamp-2">
+                    {broadcast.title}
+                  </h3>
+                  
+                  <div className="flex items-center space-x-3 text-sm text-gray-400 mb-3">
+                    {getFileIcon(broadcast.title)}
+                    <span>{formatDate(broadcast.date)}</span>
+                    <span>•</span>
+                    <span>{broadcast.fileSizeMB} MB</span>
+                  </div>
+
+                  {/* Progress indicator if playing */}
+                  {selectedBroadcast?.id === broadcast.id && isPlaying && (
+                    <div className="mb-3">
+                      <WaveformVisualizer
+                        isPlaying={true}
+                        barCount={16}
+                        className="rounded opacity-60"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onPlayBroadcast(broadcast);
-                }}
-                className="flex-shrink-0 w-10 h-10 bg-cousin-orange hover:bg-orange-600 rounded-full flex items-center justify-center transition-colors"
-              >
-                {selectedBroadcast?.id === broadcast.id && isPlaying ? (
-                  <Pause className="text-white" size={16} />
-                ) : (
-                  <Play className="text-white" size={16} />
-                )}
-              </button>
+
+              {/* Play button overlay */}
+              <div className="absolute top-4 right-4">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onPlayBroadcast(broadcast);
+                  }}
+                  className={`w-12 h-12 rounded-full flex items-center justify-center transition-all shadow-lg ${
+                    selectedBroadcast?.id === broadcast.id && isPlaying
+                      ? "bg-cousin-orange text-black"
+                      : "bg-white/20 text-white hover:bg-white/30"
+                  } opacity-0 group-hover:opacity-100 hover:scale-110`}
+                >
+                  {selectedBroadcast?.id === broadcast.id && isPlaying ? (
+                    <Pause size={20} />
+                  ) : (
+                    <Play size={20} />
+                  )}
+                </button>
+              </div>
             </div>
+            
+            {/* Click overlay for selecting broadcast */}
+            <div
+              className="absolute inset-0 cursor-pointer rounded-xl"
+              onClick={() => onSelectBroadcast(broadcast)}
+            />
           </div>
         ))}
 
-        {displayedBroadcasts.length < filteredBroadcasts.length && (
-          <div className="p-4 text-center">
-            <button
-              onClick={() => setDisplayCount(displayCount + 20)}
-              className="text-cousin-orange hover:text-orange-400 text-sm font-medium transition-colors"
-            >
-              Load More Broadcasts <ChevronDown className="inline ml-1" size={16} />
-            </button>
-          </div>
+        {filteredBroadcasts.length > displayCount && (
+          <button
+            onClick={() => setDisplayCount(prev => prev + 20)}
+            className="w-full py-4 text-cousin-orange hover:text-white transition-colors border-2 border-cousin-orange/30 rounded-xl hover:bg-cousin-orange/10 flex items-center justify-center space-x-2 font-medium"
+          >
+            <ChevronDown size={20} />
+            <span>Load More ({filteredBroadcasts.length - displayCount} remaining)</span>
+          </button>
         )}
       </div>
     </aside>

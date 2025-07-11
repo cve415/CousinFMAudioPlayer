@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Broadcast } from "@/types/broadcast";
 import { Header } from "@/components/Header";
 import { BroadcastList } from "@/components/BroadcastList";
-import { MediaPlayer } from "@/components/MediaPlayer";
+import { StreamingPlayer } from "@/components/StreamingPlayer";
 import { ErrorModal } from "@/components/ErrorModal";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { MobileControls } from "@/components/MobileControls";
@@ -91,16 +91,13 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-cousin-dark text-white">
+    <div className="min-h-screen bg-black text-white">
       <Header totalBroadcasts={broadcasts.length} />
       
-      <div className="flex flex-col">
-        {/* Media Player - Top Section */}
-        <div className="bg-gray-800 border-b border-gray-700">
-          <div className="p-4 border-b border-gray-700">
-            <AudioTest />
-          </div>
-          <MediaPlayer
+      <div className="flex flex-col lg:flex-row">
+        {/* Streaming Player - Main Content */}
+        <div className="flex-1">
+          <StreamingPlayer
             broadcast={selectedBroadcast}
             onNext={handleNext}
             onPrevious={handlePrevious}
@@ -108,17 +105,15 @@ export default function Home() {
           />
         </div>
 
-        {/* Broadcast List - Bottom Section */}
-        <div className="flex-1">
-          <BroadcastList
-            broadcasts={broadcasts}
-            selectedBroadcast={selectedBroadcast}
-            onSelectBroadcast={handleSelectBroadcast}
-            onPlayBroadcast={handlePlayBroadcast}
-            isPlaying={isPlaying}
-            isLoading={isLoading}
-          />
-        </div>
+        {/* Broadcast List - Sidebar */}
+        <BroadcastList
+          broadcasts={broadcasts}
+          selectedBroadcast={selectedBroadcast}
+          onSelectBroadcast={handleSelectBroadcast}
+          onPlayBroadcast={handlePlayBroadcast}
+          isPlaying={isPlaying}
+          isLoading={isLoading}
+        />
       </div>
 
       <MobileControls
