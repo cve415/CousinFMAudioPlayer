@@ -92,3 +92,11 @@ Preferred communication style: Simple, everyday language.
 - **Performance**: Lazy loading and efficient state management
 - **Error Resilience**: Comprehensive error handling and recovery
 - **Type Safety**: End-to-end TypeScript with runtime validation
+- **Image Support**: Database schema includes imageCid field for broadcast artwork
+- **Large Media Player**: Prominent player design with broadcast images displayed above controls
+
+### Recent Updates
+- Redesigned layout with large media player on top and playlist below
+- Added image support infrastructure ready for IPFS image integration
+- Enhanced playlist with thumbnail image display capabilities
+- Functional play buttons on individual broadcast items
