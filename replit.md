@@ -106,3 +106,4 @@ Preferred communication style: Simple, everyday language.
 - Fixed broadcast title formatting issues (removed trailing 'Q' characters)
 - Converted to static version - no backend database required
 - All broadcast data loaded from JSON file for easy deployment
+- **January 2025**: Chronological sorting (newest first), working playlist play buttons, San Francisco Golden Gate Bridge branding, 2025 year filter preparation
