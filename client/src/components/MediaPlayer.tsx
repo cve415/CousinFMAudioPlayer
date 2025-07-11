@@ -45,7 +45,11 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
       const streamUrl = `https://gateway.pinata.cloud/ipfs/${broadcast.cid}`;
       setPlayerState(prev => ({ ...prev, isLoading: true, error: null }));
       
+      console.log("Loading broadcast:", broadcast.title, "URL:", streamUrl);
+      
       mediaRef.current.src = streamUrl;
+      mediaRef.current.crossOrigin = "anonymous";
+      mediaRef.current.preload = "metadata";
       mediaRef.current.load();
     }
   }, [broadcast]);
@@ -83,7 +87,8 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
     setPlayerState(prev => ({ ...prev, isLoading: false }));
   };
 
-  const handleError = () => {
+  const handleError = (e: any) => {
+    console.error("Media error:", e);
     setPlayerState(prev => ({
       ...prev,
       isLoading: false,
@@ -328,11 +333,16 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
 
       <audio
         ref={audioRef}
+        crossOrigin="anonymous"
+        preload="metadata"
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onError={handleError}
         onPlay={handlePlay}
         onPause={handlePause}
+        onCanPlay={() => console.log("Audio can play")}
+        onLoadStart={() => console.log("Audio load start")}
+        onWaiting={() => console.log("Audio waiting")}
       />
     </main>
   );
