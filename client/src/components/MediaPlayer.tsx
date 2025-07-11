@@ -162,45 +162,48 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
 
   return (
     <main className="flex-1 flex flex-col">
-      <div className="bg-cousin-gray border-b border-gray-700 p-4">
-        <div className="max-w-4xl mx-auto">
+      <div className="bg-cousin-gray border-b border-gray-700 p-8">
+        <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-cousin-orange rounded-lg flex items-center justify-center">
+            <div className="flex items-center space-x-6">
+              <div className="w-20 h-20 bg-cousin-orange rounded-xl flex items-center justify-center shadow-lg">
                 {playerState.isPlaying ? (
-                  <Pause className="text-white" size={20} />
+                  <Pause className="text-white" size={32} />
                 ) : (
-                  <Play className="text-white" size={20} />
+                  <Play className="text-white" size={32} />
                 )}
               </div>
               <div>
-                <h2 className="text-xl font-semibold text-white">
+                <h2 className="text-3xl font-bold text-white mb-2">
                   {broadcast.title}
                 </h2>
-                <p className="text-cousin-light-gray">
+                <p className="text-cousin-light-gray text-lg">
                   {new Date(broadcast.date).toLocaleDateString()}
+                </p>
+                <p className="text-cousin-light-gray text-sm mt-1">
+                  {broadcast.fileSizeMB} MB • {isVideo ? "Video" : "Audio"}
                 </p>
               </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <button className="p-2 hover:bg-gray-700 rounded-full transition-colors">
-                <Share className="text-cousin-light-gray" size={20} />
+            <div className="flex items-center space-x-3">
+              <button className="p-3 hover:bg-gray-700 rounded-full transition-colors">
+                <Share className="text-cousin-light-gray" size={24} />
               </button>
-              <button className="p-2 hover:bg-gray-700 rounded-full transition-colors">
-                <Download className="text-cousin-light-gray" size={20} />
+              <button className="p-3 hover:bg-gray-700 rounded-full transition-colors">
+                <Download className="text-cousin-light-gray" size={24} />
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="max-w-4xl w-full">
+      <div className="flex-1 flex items-center justify-center p-12">
+        <div className="max-w-6xl w-full">
           {isVideo ? (
-            <div className="mb-8">
+            <div className="mb-12">
               <video
                 ref={videoRef}
-                className="w-full max-w-2xl mx-auto rounded-lg shadow-2xl"
+                className="w-full max-w-4xl mx-auto rounded-2xl shadow-2xl"
                 controls
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
@@ -212,16 +215,16 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
               </video>
             </div>
           ) : (
-            <div className="mb-8 text-center">
-              <div className="w-full max-w-lg mx-auto h-32 bg-gray-800 rounded-lg flex items-end justify-center space-x-1 p-4">
-                {[...Array(15)].map((_, i) => (
+            <div className="mb-12 text-center">
+              <div className="w-full max-w-2xl mx-auto h-48 bg-gray-800 rounded-2xl flex items-end justify-center space-x-2 p-6 shadow-xl">
+                {[...Array(24)].map((_, i) => (
                   <div
                     key={i}
-                    className={`w-2 rounded-full ${
+                    className={`w-3 rounded-full ${
                       i % 3 === 0 ? "bg-cousin-orange" : "bg-gray-600"
                     }`}
                     style={{
-                      height: `${Math.random() * 60 + 20}px`,
+                      height: `${Math.random() * 100 + 30}px`,
                       animation: playerState.isPlaying ? `pulse ${Math.random() * 2 + 1}s infinite` : "none",
                     }}
                   />
@@ -230,75 +233,75 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
             </div>
           )}
 
-          <div className="bg-cousin-gray rounded-2xl p-6 shadow-xl">
-            <div className="mb-6">
-              <div className="flex justify-between text-sm text-cousin-light-gray mb-2">
+          <div className="bg-cousin-gray rounded-3xl p-8 shadow-2xl">
+            <div className="mb-8">
+              <div className="flex justify-between text-lg text-cousin-light-gray mb-4">
                 <span>{formatTime(playerState.currentTime)}</span>
                 <span>{formatTime(playerState.duration)}</span>
               </div>
               <div 
-                className="w-full bg-gray-700 rounded-full h-2 cursor-pointer"
+                className="w-full bg-gray-700 rounded-full h-3 cursor-pointer"
                 onClick={handleSeek}
               >
                 <div
-                  className="bg-cousin-orange h-2 rounded-full transition-all duration-200"
+                  className="bg-cousin-orange h-3 rounded-full transition-all duration-200"
                   style={{ width: `${progressPercentage}%` }}
                 />
               </div>
             </div>
 
-            <div className="flex items-center justify-center space-x-6 mb-6">
+            <div className="flex items-center justify-center space-x-8 mb-8">
               <button
                 onClick={onPrevious}
-                className="p-3 hover:bg-gray-700 rounded-full transition-colors"
+                className="p-4 hover:bg-gray-700 rounded-full transition-colors"
               >
-                <SkipBack className="text-cousin-light-gray" size={24} />
+                <SkipBack className="text-cousin-light-gray" size={32} />
               </button>
-              <button className="p-3 hover:bg-gray-700 rounded-full transition-colors">
-                <Rewind className="text-cousin-light-gray" size={24} />
+              <button className="p-4 hover:bg-gray-700 rounded-full transition-colors">
+                <Rewind className="text-cousin-light-gray" size={28} />
               </button>
               <button
                 onClick={togglePlay}
-                className="w-16 h-16 bg-cousin-orange hover:bg-orange-600 rounded-full flex items-center justify-center transition-colors"
+                className="w-20 h-20 bg-cousin-orange hover:bg-orange-600 rounded-full flex items-center justify-center transition-colors shadow-lg"
                 disabled={playerState.isLoading}
               >
                 {playerState.isLoading ? (
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white" />
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white" />
                 ) : playerState.isPlaying ? (
-                  <Pause className="text-white" size={28} />
+                  <Pause className="text-white" size={36} />
                 ) : (
-                  <Play className="text-white" size={28} />
+                  <Play className="text-white" size={36} />
                 )}
               </button>
-              <button className="p-3 hover:bg-gray-700 rounded-full transition-colors">
-                <FastForward className="text-cousin-light-gray" size={24} />
+              <button className="p-4 hover:bg-gray-700 rounded-full transition-colors">
+                <FastForward className="text-cousin-light-gray" size={28} />
               </button>
               <button
                 onClick={onNext}
-                className="p-3 hover:bg-gray-700 rounded-full transition-colors"
+                className="p-4 hover:bg-gray-700 rounded-full transition-colors"
               >
-                <SkipForward className="text-cousin-light-gray" size={24} />
+                <SkipForward className="text-cousin-light-gray" size={32} />
               </button>
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <button className="p-2 hover:bg-gray-700 rounded-full transition-colors">
-                  <Shuffle className="text-cousin-light-gray" size={20} />
+              <div className="flex items-center space-x-6">
+                <button className="p-3 hover:bg-gray-700 rounded-full transition-colors">
+                  <Shuffle className="text-cousin-light-gray" size={24} />
                 </button>
-                <button className="p-2 hover:bg-gray-700 rounded-full transition-colors">
-                  <Repeat className="text-cousin-light-gray" size={20} />
+                <button className="p-3 hover:bg-gray-700 rounded-full transition-colors">
+                  <Repeat className="text-cousin-light-gray" size={24} />
                 </button>
               </div>
 
-              <div className="flex items-center space-x-2">
-                <Volume2 className="text-cousin-light-gray" size={20} />
+              <div className="flex items-center space-x-3">
+                <Volume2 className="text-cousin-light-gray" size={24} />
                 <div
-                  className="w-24 bg-gray-700 rounded-full h-1 cursor-pointer"
+                  className="w-32 bg-gray-700 rounded-full h-2 cursor-pointer"
                   onClick={handleVolumeChange}
                 >
                   <div
-                    className="bg-cousin-orange h-1 rounded-full"
+                    className="bg-cousin-orange h-2 rounded-full"
                     style={{ width: `${volumePercentage}%` }}
                   />
                 </div>
@@ -306,19 +309,19 @@ export function MediaPlayer({ broadcast, onNext, onPrevious }: MediaPlayerProps)
             </div>
           </div>
 
-          <div className="mt-6 bg-cousin-gray rounded-lg p-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div className="mt-8 bg-cousin-gray rounded-2xl p-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
-                <p className="text-cousin-light-gray text-sm">File Size</p>
-                <p className="text-white font-semibold">{broadcast.fileSizeMB} MB</p>
+                <p className="text-cousin-light-gray text-base">File Size</p>
+                <p className="text-white font-bold text-lg">{broadcast.fileSizeMB} MB</p>
               </div>
               <div>
-                <p className="text-cousin-light-gray text-sm">Duration</p>
-                <p className="text-white font-semibold">{formatTime(playerState.duration)}</p>
+                <p className="text-cousin-light-gray text-base">Duration</p>
+                <p className="text-white font-bold text-lg">{formatTime(playerState.duration)}</p>
               </div>
               <div>
-                <p className="text-cousin-light-gray text-sm">Broadcast #</p>
-                <p className="text-white font-semibold">{broadcast.id}</p>
+                <p className="text-cousin-light-gray text-base">Broadcast #</p>
+                <p className="text-white font-bold text-lg">{broadcast.id}</p>
               </div>
               <div>
                 <p className="text-cousin-light-gray text-sm">Format</p>

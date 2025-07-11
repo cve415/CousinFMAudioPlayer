@@ -94,17 +94,9 @@ export default function Home() {
     <div className="min-h-screen bg-cousin-dark text-white">
       <Header totalBroadcasts={broadcasts.length} />
       
-      <div className="flex flex-col lg:flex-row">
-        <BroadcastList
-          broadcasts={broadcasts}
-          selectedBroadcast={selectedBroadcast}
-          onSelectBroadcast={handleSelectBroadcast}
-          onPlayBroadcast={handlePlayBroadcast}
-          isPlaying={isPlaying}
-          isLoading={isLoading}
-        />
-        
-        <div className="flex-1 flex flex-col">
+      <div className="flex flex-col">
+        {/* Media Player - Top Section */}
+        <div className="bg-gray-800 border-b border-gray-700">
           <div className="p-4 border-b border-gray-700">
             <AudioTest />
           </div>
@@ -113,6 +105,18 @@ export default function Home() {
             onNext={handleNext}
             onPrevious={handlePrevious}
             broadcasts={broadcasts}
+          />
+        </div>
+
+        {/* Broadcast List - Bottom Section */}
+        <div className="flex-1">
+          <BroadcastList
+            broadcasts={broadcasts}
+            selectedBroadcast={selectedBroadcast}
+            onSelectBroadcast={handleSelectBroadcast}
+            onPlayBroadcast={handlePlayBroadcast}
+            isPlaying={isPlaying}
+            isLoading={isLoading}
           />
         </div>
       </div>
