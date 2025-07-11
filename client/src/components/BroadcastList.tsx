@@ -112,38 +112,16 @@ export function BroadcastList({
             <div className="p-4">
               <div className="flex items-start space-x-4">
                 {/* Large Artwork */}
-                {broadcast.imageCid ? (
-                  <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden shadow-lg">
-                    <img
-                      src={`/attached_assets/${broadcast.imageCid}`}
-                      alt={broadcast.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                        e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                      }}
-                    />
-                    <div className={`hidden w-20 h-20 rounded-lg flex items-center justify-center ${
-                      selectedBroadcast?.id === broadcast.id
-                        ? "bg-cousin-orange"
-                        : "bg-gray-700"
-                    }`}>
-                      <span className="text-white text-lg font-bold">
-                        {index + 1}
-                      </span>
-                    </div>
-                  </div>
-                ) : (
-                  <div className={`flex-shrink-0 w-20 h-20 rounded-lg flex items-center justify-center ${
-                    selectedBroadcast?.id === broadcast.id
-                      ? "bg-cousin-orange"
-                      : "bg-gray-700"
-                  }`}>
-                    <span className="text-white text-lg font-bold">
-                      {index + 1}
-                    </span>
-                  </div>
-                )}
+                <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden shadow-lg">
+                  <img
+                    src={broadcast.imageCid ? `/attached_assets/${broadcast.imageCid}` : '/attached_assets/cousinfm-default-cover.svg'}
+                    alt={broadcast.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = '/attached_assets/cousinfm-default-cover.svg';
+                    }}
+                  />
+                </div>
                 
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-white text-lg leading-tight mb-2 line-clamp-2">

@@ -1,0 +1,76 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a2a2a;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff9500;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#ff9500;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="url(#backgroundGradient)"/>
+  <rect width="400" height="400" fill="url(#centerGlow)"/>
+  
+  <!-- Waveform visualization -->
+  <g transform="translate(50, 280)">
+    <rect x="0" y="0" width="4" height="40" fill="#ff9500" opacity="0.8"/>
+    <rect x="10" y="10" width="4" height="20" fill="#ff9500" opacity="0.6"/>
+    <rect x="20" y="5" width="4" height="30" fill="#ff9500" opacity="0.7"/>
+    <rect x="30" y="0" width="4" height="40" fill="#ff9500" opacity="0.8"/>
+    <rect x="40" y="15" width="4" height="10" fill="#ff9500" opacity="0.5"/>
+    <rect x="50" y="8" width="4" height="24" fill="#ff9500" opacity="0.6"/>
+    <rect x="60" y="2" width="4" height="36" fill="#ff9500" opacity="0.7"/>
+    <rect x="70" y="12" width="4" height="16" fill="#ff9500" opacity="0.6"/>
+    <rect x="80" y="0" width="4" height="40" fill="#ff9500" opacity="0.8"/>
+    <rect x="90" y="18" width="4" height="4" fill="#ff9500" opacity="0.4"/>
+    <rect x="100" y="6" width="4" height="28" fill="#ff9500" opacity="0.7"/>
+    <rect x="110" y="14" width="4" height="12" fill="#ff9500" opacity="0.5"/>
+    <rect x="120" y="0" width="4" height="40" fill="#ff9500" opacity="0.8"/>
+    <rect x="130" y="10" width="4" height="20" fill="#ff9500" opacity="0.6"/>
+    <rect x="140" y="4" width="4" height="32" fill="#ff9500" opacity="0.7"/>
+    <rect x="150" y="16" width="4" height="8" fill="#ff9500" opacity="0.5"/>
+    <rect x="160" y="0" width="4" height="40" fill="#ff9500" opacity="0.8"/>
+    <rect x="170" y="12" width="4" height="16" fill="#ff9500" opacity="0.6"/>
+    <rect x="180" y="8" width="4" height="24" fill="#ff9500" opacity="0.7"/>
+    <rect x="190" y="18" width="4" height="4" fill="#ff9500" opacity="0.4"/>
+    <rect x="200" y="0" width="4" height="40" fill="#ff9500" opacity="0.8"/>
+    <rect x="210" y="14" width="4" height="12" fill="#ff9500" opacity="0.5"/>
+    <rect x="220" y="6" width="4" height="28" fill="#ff9500" opacity="0.7"/>
+    <rect x="230" y="10" width="4" height="20" fill="#ff9500" opacity="0.6"/>
+    <rect x="240" y="0" width="4" height="40" fill="#ff9500" opacity="0.8"/>
+    <rect x="250" y="16" width="4" height="8" fill="#ff9500" opacity="0.5"/>
+    <rect x="260" y="2" width="4" height="36" fill="#ff9500" opacity="0.7"/>
+    <rect x="270" y="12" width="4" height="16" fill="#ff9500" opacity="0.6"/>
+    <rect x="280" y="0" width="4" height="40" fill="#ff9500" opacity="0.8"/>
+    <rect x="290" y="8" width="4" height="24" fill="#ff9500" opacity="0.7"/>
+    <rect x="300" y="18" width="4" height="4" fill="#ff9500" opacity="0.4"/>
+  </g>
+  
+  <!-- Main logo/text -->
+  <g transform="translate(200, 200)">
+    <!-- Radio waves -->
+    <circle cx="0" cy="0" r="60" fill="none" stroke="#ff9500" stroke-width="2" opacity="0.3"/>
+    <circle cx="0" cy="0" r="80" fill="none" stroke="#ff9500" stroke-width="1.5" opacity="0.2"/>
+    <circle cx="0" cy="0" r="100" fill="none" stroke="#ff9500" stroke-width="1" opacity="0.1"/>
+    
+    <!-- Center microphone/broadcast icon -->
+    <rect x="-15" y="-30" width="30" height="40" rx="15" fill="#ff9500"/>
+    <rect x="-10" y="-35" width="20" height="10" rx="5" fill="#ff9500"/>
+    <rect x="-2" y="10" width="4" height="20" fill="#ff9500"/>
+    <rect x="-8" y="28" width="16" height="6" rx="3" fill="#ff9500"/>
+  </g>
+  
+  <!-- CousinFM text -->
+  <text x="200" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#ffffff">CousinFM</text>
+  <text x="200" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#cccccc">RADIO BROADCAST</text>
+  
+  <!-- Decorative elements -->
+  <circle cx="80" cy="80" r="3" fill="#ff9500" opacity="0.6"/>
+  <circle cx="320" cy="100" r="2" fill="#ff9500" opacity="0.4"/>
+  <circle cx="60" cy="320" r="2.5" fill="#ff9500" opacity="0.5"/>
+  <circle cx="340" cy="320" r="3" fill="#ff9500" opacity="0.6"/>
+</svg>
