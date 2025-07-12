@@ -68,13 +68,24 @@ export default function Home() {
   };
 
   const handlePlayBroadcast = (broadcast: Broadcast) => {
+    console.log('Play broadcast clicked:', broadcast.title);
+    
     if (selectedBroadcast?.id === broadcast.id) {
       // If same broadcast, toggle play/pause
       setIsPlaying(!isPlaying);
+      console.log('Toggling play/pause for current broadcast:', !isPlaying);
     } else {
       // If different broadcast, select it and start playing
+      console.log('Selecting new broadcast:', broadcast.title);
       setSelectedBroadcast(broadcast);
       setIsPlaying(true);
+      setError(null);
+      
+      // Force a small delay to ensure state updates
+      setTimeout(() => {
+        console.log('Setting isPlaying to true after delay');
+        setIsPlaying(true);
+      }, 100);
     }
   };
 
@@ -101,6 +112,8 @@ export default function Home() {
             onNext={handleNext}
             onPrevious={handlePrevious}
             broadcasts={broadcasts}
+            isPlaying={isPlaying}
+            onTogglePlay={handleTogglePlay}
           />
         </div>
 

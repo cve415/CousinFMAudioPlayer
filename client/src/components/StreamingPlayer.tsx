@@ -26,11 +26,13 @@ interface StreamingPlayerProps {
   onNext: () => void;
   onPrevious: () => void;
   broadcasts: Broadcast[];
+  isPlaying: boolean;
+  onTogglePlay: () => void;
 }
 
-export function StreamingPlayer({ broadcast, onNext, onPrevious }: StreamingPlayerProps) {
+export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTogglePlay }: StreamingPlayerProps) {
   const [playerState, setPlayerState] = useState<MediaPlayerState>({
-    isPlaying: false,
+    isPlaying: isPlaying,
     currentTime: 0,
     duration: 0,
     volume: 0.7,
@@ -63,15 +65,28 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious }: StreamingPlay
     }
   }, [broadcast]);
 
+  // Sync with parent isPlaying state
+  useEffect(() => {
+    if (mediaRef.current && broadcast) {
+      if (isPlaying && mediaRef.current.paused) {
+        mediaRef.current.play().catch(console.error);
+      } else if (!isPlaying && !mediaRef.current.paused) {
+        mediaRef.current.pause();
+      }
+    }
+    setPlayerState(prev => ({ ...prev, isPlaying }));
+  }, [isPlaying, broadcast]);
+
   const togglePlay = async () => {
     if (!mediaRef.current || !broadcast) return;
 
     try {
-      if (playerState.isPlaying) {
+      if (isPlaying) {
         mediaRef.current.pause();
       } else {
         await mediaRef.current.play();
       }
+      onTogglePlay();
     } catch (error) {
       console.error("Playback error:", error);
       toast({
@@ -168,12 +183,12 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious }: StreamingPlay
                   >
                     {playerState.isLoading ? (
                       <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-black mr-2" />
-                    ) : playerState.isPlaying ? (
+                    ) : isPlaying ? (
                       <Pause className="mr-2" size={24} />
                     ) : (
                       <Play className="mr-2" size={24} />
                     )}
-                    {playerState.isPlaying ? 'Pause' : 'Play'}
+                    {isPlaying ? 'Pause' : 'Play'}
                   </Button>
                   
                   <Button
