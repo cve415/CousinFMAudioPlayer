@@ -10,7 +10,8 @@ A modern, Netflix-style streaming web application for playing radio broadcasts s
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Visual Feedback**: Dynamic waveform visualizer and broadcast artwork
 - **San Francisco Branding**: Golden Gate Bridge imagery throughout
-- **One-Click Playback**: Play buttons work directly from playlist
+- **One-Click Playback**: Play buttons work directly from playlist with instant audio streaming
+- **Individual Sharing**: Each broadcast has its own shareable URL for social media and direct links
 - **Static Deployment**: No backend required - runs anywhere
 
 ## 🛠 Technical Architecture
