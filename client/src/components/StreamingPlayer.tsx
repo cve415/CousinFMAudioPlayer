@@ -156,8 +156,39 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
     }
   };
 
+  // PostMessage for iframe parent communication
+  useEffect(() => {
+    const sendHeightToParent = () => {
+      if (window.parent && window.parent.postMessage) {
+        const height = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight,
+          window.innerHeight
+        );
+        window.parent.postMessage({ type: 'resize', height }, '*');
+      }
+    };
+
+    // Send height on load and content changes
+    sendHeightToParent();
+    window.addEventListener('resize', sendHeightToParent);
+
+    // Watch for DOM changes
+    const observer = new MutationObserver(sendHeightToParent);
+    observer.observe(document.body, {
+      attributes: true,
+      childList: true,
+      subtree: true
+    });
+
+    return () => {
+      window.removeEventListener('resize', sendHeightToParent);
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <div className="relative bg-gradient-to-br from-cousin-gray via-gray-900 to-black text-white overflow-hidden">
+    <div className="relative bg-gradient-to-br from-cousin-gray via-gray-900 to-black text-white overflow-hidden min-h-screen">
       {broadcast ? (
         <div className="relative">
           {/* Hero Section with Large Artwork */}
