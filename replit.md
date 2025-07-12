@@ -7,6 +7,7 @@ CousinFM is a modern web application for streaming radio broadcasts stored on IP
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Documentation preference: Brief but effective documentation suitable for engineers and business users of all levels.
 
 ## System Architecture
 
