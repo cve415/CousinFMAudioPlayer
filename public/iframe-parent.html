@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CousinFM Audio Player</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        #main-iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: block;
+            background: #000;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff6b35;
+            font-size: 18px;
+            z-index: 1000;
+        }
+        
+        .loading.hidden {
+            display: none;
+        }
+        
+        /* Mobile optimization */
+        @media (max-width: 768px) {
+            .iframe-container {
+                min-height: 100vh;
+            }
+            
+            #main-iframe {
+                height: 100vh;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        <div class="loading" id="loading">Loading CousinFM...</div>
+        <iframe 
+            id="main-iframe"
+            src="https://cousinfm-audio-player.replit.app"
+            title="CousinFM Audio Player"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+            sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
+            onload="handleIframeLoad()"
+        ></iframe>
+    </div>
+
+    <script>
+        function handleIframeLoad() {
+            // Hide loading indicator
+            document.getElementById('loading').classList.add('hidden');
+            
+            // Set initial height
+            const iframe = document.getElementById('main-iframe');
+            iframe.style.height = window.innerHeight + 'px';
+        }
+        
+        // Listen for resize messages from iframe
+        window.addEventListener('message', function(event) {
+            // Verify origin for security
+            if (event.origin !== 'https://cousinfm-audio-player.replit.app') {
+                return;
+            }
+            
+            const data = event.data;
+            if (data && data.type === 'resize' && data.height) {
+                const iframe = document.getElementById('main-iframe');
+                const newHeight = Math.max(data.height, window.innerHeight);
+                iframe.style.height = newHeight + 'px';
+                
+                // Update container height
+                document.querySelector('.iframe-container').style.height = newHeight + 'px';
+            }
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const iframe = document.getElementById('main-iframe');
+            const minHeight = window.innerHeight;
+            const currentHeight = parseInt(iframe.style.height);
+            
+            if (currentHeight < minHeight) {
+                iframe.style.height = minHeight + 'px';
+            }
+        });
+        
+        // Prevent scrolling issues on iOS
+        document.addEventListener('touchmove', function(e) {
+            if (e.target === document.body) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>

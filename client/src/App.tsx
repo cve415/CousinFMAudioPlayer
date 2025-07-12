@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import BroadcastPage from "@/pages/broadcast";
 import NotFound from "@/pages/not-found";
+import { useEffect } from "react";
 
 function Router() {
   return (
@@ -18,6 +19,39 @@ function Router() {
 }
 
 function App() {
+  // Handle iframe communication for domain forwarding
+  useEffect(() => {
+    const sendHeightToParent = () => {
+      if (window.parent && window.parent.postMessage && window.parent !== window) {
+        const height = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight,
+          window.innerHeight
+        );
+        window.parent.postMessage({ type: 'resize', height }, '*');
+      }
+    };
+
+    // Initial height send
+    sendHeightToParent();
+    
+    // Update on resize
+    window.addEventListener('resize', sendHeightToParent);
+    
+    // Watch for DOM changes
+    const observer = new MutationObserver(sendHeightToParent);
+    observer.observe(document.body, {
+      attributes: true,
+      childList: true,
+      subtree: true
+    });
+
+    return () => {
+      window.removeEventListener('resize', sendHeightToParent);
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
