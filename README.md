@@ -1,8 +1,8 @@
-# CousinFM Technical Documentation
+# CousinFMAudioPlayer Technical Documentation
 
 ## Architecture Overview
 
-CousinFM is a static React application that streams media content from IPFS using a JSON-based data layer. The architecture prioritizes simplicity, performance, and decentralized content delivery.
+CousinFMAudioPlayer is a static React application that streams media content from IPFS using a JSON-based data layer. The architecture prioritizes simplicity, performance, and decentralized content delivery.
 
 ### Core Architecture Principles
 
