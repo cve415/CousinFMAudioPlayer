@@ -69,8 +69,13 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
   useEffect(() => {
     if (mediaRef.current && broadcast) {
       if (isPlaying && mediaRef.current.paused) {
-        mediaRef.current.play().catch(console.error);
+        console.log("Playing audio due to parent state change");
+        mediaRef.current.play().catch(error => {
+          console.error("Auto-play error:", error);
+          setPlayerState(prev => ({ ...prev, error: error.message }));
+        });
       } else if (!isPlaying && !mediaRef.current.paused) {
+        console.log("Pausing audio due to parent state change");
         mediaRef.current.pause();
       }
     }
@@ -78,20 +83,36 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
   }, [isPlaying, broadcast]);
 
   const togglePlay = async () => {
-    if (!mediaRef.current || !broadcast) return;
+    if (!mediaRef.current || !broadcast) {
+      console.error("No media ref or broadcast available");
+      return;
+    }
 
     try {
+      console.log("Toggle play - current state:", isPlaying, "media paused:", mediaRef.current.paused);
+      
       if (isPlaying) {
         mediaRef.current.pause();
+        console.log("Paused playback");
       } else {
+        // Ensure the media is loaded before playing
+        if (mediaRef.current.readyState < 3) {
+          console.log("Media not ready, loading...");
+          mediaRef.current.load();
+          await new Promise((resolve) => {
+            mediaRef.current!.addEventListener('canplay', resolve, { once: true });
+          });
+        }
         await mediaRef.current.play();
+        console.log("Started playback");
       }
       onTogglePlay();
     } catch (error) {
       console.error("Playback error:", error);
+      setPlayerState(prev => ({ ...prev, error: error.message }));
       toast({
         title: "Playback Error",
-        description: "Unable to play the broadcast. Please try again.",
+        description: `Unable to play the broadcast: ${error.message}`,
         variant: "destructive",
       });
     }
@@ -201,10 +222,10 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
                 </div>
 
                 {/* Waveform Visualizer */}
-                {playerState.isPlaying && (
+                {isPlaying && (
                   <div className="mb-6">
                     <WaveformVisualizer
-                      isPlaying={playerState.isPlaying}
+                      isPlaying={isPlaying}
                       className="rounded-lg opacity-80"
                     />
                   </div>
@@ -347,8 +368,14 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
               console.log("Audio can play");
               setPlayerState(prev => ({ ...prev, isLoading: false }));
             }}
-            onPlay={() => setPlayerState(prev => ({ ...prev, isPlaying: true }))}
-            onPause={() => setPlayerState(prev => ({ ...prev, isPlaying: false }))}
+            onPlay={() => {
+              console.log("Audio play event");
+              // Don't set local state, let parent handle it
+            }}
+            onPause={() => {
+              console.log("Audio pause event");
+              // Don't set local state, let parent handle it
+            }}
             onTimeUpdate={() => {
               const media = audioRef.current;
               if (media) {
@@ -391,8 +418,14 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
                 console.log("Video can play");
                 setPlayerState(prev => ({ ...prev, isLoading: false }));
               }}
-              onPlay={() => setPlayerState(prev => ({ ...prev, isPlaying: true }))}
-              onPause={() => setPlayerState(prev => ({ ...prev, isPlaying: false }))}
+              onPlay={() => {
+                console.log("Video play event");
+                // Don't set local state, let parent handle it
+              }}
+              onPause={() => {
+                console.log("Video pause event");
+                // Don't set local state, let parent handle it
+              }}
               onTimeUpdate={() => {
                 const media = videoRef.current;
                 if (media) {
