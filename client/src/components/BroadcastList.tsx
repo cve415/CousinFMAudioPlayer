@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Broadcast } from "@/types/broadcast";
-import { FileAudio, FileVideo, ChevronDown, Play, Pause } from "lucide-react";
+import { FileAudio, FileVideo, ChevronDown, Play, Pause, Share2 } from "lucide-react";
 import { format } from "date-fns";
 import { WaveformVisualizer } from "./WaveformVisualizer";
 
@@ -151,7 +151,32 @@ export function BroadcastList({
               </div>
 
               {/* Play button overlay */}
-              <div className="absolute top-4 right-4">
+              <div className="absolute top-4 right-4 flex space-x-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const shareUrl = `${window.location.origin}?broadcast=${broadcast.id}`;
+                    if (navigator.share) {
+                      navigator.share({
+                        title: `${broadcast.title} - CousinFM`,
+                        text: `Listen to this broadcast from CousinFM San Francisco`,
+                        url: shareUrl,
+                      });
+                    } else {
+                      navigator.clipboard.writeText(shareUrl);
+                      // Simple feedback
+                      const button = e.currentTarget;
+                      const originalText = button.innerHTML;
+                      button.innerHTML = '<svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
+                      setTimeout(() => {
+                        button.innerHTML = originalText;
+                      }, 2000);
+                    }
+                  }}
+                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-lg bg-white/20 text-white hover:bg-white/30 opacity-0 group-hover:opacity-100 hover:scale-110"
+                >
+                  <Share2 size={16} />
+                </button>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();

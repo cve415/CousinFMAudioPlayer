@@ -24,6 +24,22 @@ export default function Home() {
     );
     setBroadcasts(sortedBroadcasts);
     setIsLoading(false);
+
+    // Check for shared broadcast in URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedBroadcastId = urlParams.get('broadcast');
+    if (sharedBroadcastId) {
+      const sharedBroadcast = sortedBroadcasts.find(
+        b => b.id === parseInt(sharedBroadcastId)
+      );
+      if (sharedBroadcast) {
+        setSelectedBroadcast(sharedBroadcast);
+        // Auto-play shared broadcast after a short delay
+        setTimeout(() => {
+          setIsPlaying(true);
+        }, 1000);
+      }
+    }
   }, []);
 
   const handleSelectBroadcast = (broadcast: Broadcast) => {
