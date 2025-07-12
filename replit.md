@@ -107,4 +107,4 @@ Documentation preference: Brief but effective documentation suitable for enginee
 - Fixed broadcast title formatting issues (removed trailing 'Q' characters)
 - Converted to static version - no backend database required
 - All broadcast data loaded from JSON file for easy deployment
-- **January 2025**: Chronological sorting (newest first), working playlist play buttons, San Francisco Golden Gate Bridge branding, 2025 year filter preparation, individual broadcast sharing system with URL parameters
+- **January 2025**: Chronological sorting (newest first), fully functional playlist play buttons with instant playback, San Francisco Golden Gate Bridge branding with cropped borders, 2025 year filter preparation, individual broadcast sharing system with URL parameters and auto-play functionality
