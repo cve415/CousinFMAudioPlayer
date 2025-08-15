@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { Broadcast } from "@/types/broadcast";
-import { FileAudio, FileVideo, ChevronDown, Play, Pause, Share2 } from "lucide-react";
+import {
+  FileAudio,
+  FileVideo,
+  ChevronDown,
+  Play,
+  Pause,
+  Share2,
+} from "lucide-react";
 import { format } from "date-fns";
 import { WaveformVisualizer } from "./WaveformVisualizer";
 
@@ -25,7 +32,7 @@ export function BroadcastList({
   const [displayCount, setDisplayCount] = useState(20);
 
   const years = Array.from(
-    new Set([...broadcasts.map((b) => new Date(b.date).getFullYear()), 2025])
+    new Set([...broadcasts.map((b) => new Date(b.date).getFullYear()), 2025]),
   ).sort((a, b) => b - a);
 
   const filteredBroadcasts = broadcasts
@@ -72,8 +79,10 @@ export function BroadcastList({
   return (
     <aside className="w-full lg:w-80 xl:w-96 bg-black/90 backdrop-blur-sm border-r border-gray-800 overflow-y-auto">
       <div className="mobile-padding border-b border-gray-800">
-        <h2 className="text-responsive-lg sm:text-responsive-xl font-bold mb-4 sm:mb-6 text-white">CousinFM Archive</h2>
-        
+        <h2 className="text-responsive-lg sm:text-responsive-xl font-bold mb-4 sm:mb-6 text-white">
+          CousinFM Archive
+        </h2>
+
         <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
           <button
             onClick={() => setYearFilter("all")}
@@ -116,20 +125,25 @@ export function BroadcastList({
                 {/* Large Artwork */}
                 <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden shadow-lg">
                   <img
-                    src={broadcast.imageCid ? `/attached_assets/${broadcast.imageCid}` : '/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png'}
+                    src={
+                      broadcast.imageCid
+                        ? `/attached_assets/${broadcast.imageCid}`
+                        : "/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png"
+                    }
                     alt={broadcast.title}
                     className="w-full h-full object-cover scale-110"
                     onError={(e) => {
-                      e.currentTarget.src = '/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png';
+                      e.currentTarget.src =
+                        "/attached_assets/Distributed by CousinFM San Francisco, CA 94133_1752216719267.png";
                     }}
                   />
                 </div>
-                
+
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-white text-responsive-sm sm:text-responsive-base leading-tight mb-2 line-clamp-2">
                     {broadcast.title}
                   </h3>
-                  
+
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-responsive-xs sm:text-responsive-sm text-gray-400 mb-3">
                     {getFileIcon(broadcast.title)}
                     <span>{formatDate(broadcast.date)}</span>
@@ -167,7 +181,8 @@ export function BroadcastList({
                       // Simple feedback
                       const button = e.currentTarget;
                       const originalText = button.innerHTML;
-                      button.innerHTML = '<svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
+                      button.innerHTML =
+                        '<svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
                       setTimeout(() => {
                         button.innerHTML = originalText;
                       }, 2000);
@@ -197,7 +212,7 @@ export function BroadcastList({
                 </button>
               </div>
             </div>
-            
+
             {/* Click overlay for selecting broadcast */}
             <div
               className="absolute inset-0 cursor-pointer rounded-xl"
@@ -208,11 +223,13 @@ export function BroadcastList({
 
         {filteredBroadcasts.length > displayCount && (
           <button
-            onClick={() => setDisplayCount(prev => prev + 20)}
+            onClick={() => setDisplayCount((prev) => prev + 20)}
             className="w-full py-4 text-cousin-orange hover:text-white transition-colors border-2 border-cousin-orange/30 rounded-xl hover:bg-cousin-orange/10 flex items-center justify-center space-x-2 font-medium"
           >
             <ChevronDown size={20} />
-            <span>Load More ({filteredBroadcasts.length - displayCount} remaining)</span>
+            <span>
+              Load More ({filteredBroadcasts.length - displayCount} remaining)
+            </span>
           </button>
         )}
       </div>
