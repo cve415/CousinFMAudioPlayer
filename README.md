@@ -39,7 +39,7 @@ Visit `http://localhost:5173` to start streaming.
 
 ### Technology Stack
 - **Frontend**: React 18 + TypeScript + Tailwind CSS
-- **Storage**: IPFS for media, local JSON for metadata
+- **Decentralized Storage**: IPFS for media, local JSON for metadata
 - **Build**: Vite for fast development and production builds
 - **Gateway**: Pinata for reliable IPFS access
 
