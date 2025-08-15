@@ -1,296 +1,131 @@
-# CousinFMAudioPlayer Technical Documentation
+# CousinFMAudioPlayer
 
-## Architecture Overview
+A decentralized audio streaming application that serves media content directly from IPFS. Built as a static React app with no backend dependencies.
 
-CousinFMAudioPlayer is a static React application that streams media content from IPFS using a JSON-based data layer. The architecture prioritizes simplicity, performance, and decentralized content delivery.
+## Problem It Solves
 
-### Core Architecture Principles
+- **Censorship Resistance**: Content stored on IPFS cannot be easily taken down
+- **Zero Infrastructure Costs**: No servers to maintain, completely static deployment
+- **Global Accessibility**: IPFS provides distributed content delivery worldwide
+- **Simple Deployment**: Deploy anywhere that serves static files
 
-- **Static-First**: No backend server required for production
-- **Decentralized Storage**: IPFS for media content, local JSON for metadata
-- **Component-Based**: Modular React components with TypeScript
-- **Mobile-First**: Responsive design with touch-friendly controls
+## Features
 
-## Technology Stack
+- 🎵 Stream audio directly from IPFS
+- 📱 Mobile-first responsive design
+- 🎨 Netflix-style hero player with background artwork
+- 📅 Year-based filtering and search
+- 🌊 Real-time waveform visualization
+- ⚡ Fast loading with preloading and caching
+- 🔒 Content Security Policy compliant
 
-### Frontend
-```
-React 18.2.0          # Component framework
-TypeScript 5.0+       # Type safety
-Tailwind CSS 3.3+     # Utility-first styling
-Radix UI              # Accessible component primitives
-Wouter                # Lightweight routing
-TanStack Query        # Server state management patterns
-```
+## Quick Start
 
-### Build & Development
-```
-Vite 4.4+             # Build tool and dev server
-ESBuild               # Fast TypeScript compilation
-PostCSS               # CSS processing
-Tailwind JIT          # Just-in-time CSS compilation
-```
-
-### Media & Storage
-```
-IPFS                  # Decentralized media storage
-Pinata Gateway        # IPFS access layer
-Local JSON            # Metadata storage
-Browser Storage       # User preferences
-```
-
-## Project Structure
-
-```
-├── client/
-│   ├── src/
-│   │   ├── components/           # React components
-│   │   │   ├── StreamingPlayer.tsx    # Main hero player
-│   │   │   ├── BroadcastList.tsx      # Archive playlist
-│   │   │   ├── MediaPlayer.tsx        # Audio/video controls
-│   │   │   └── WaveformVisualizer.tsx # Audio visualization
-│   │   ├── data/
-│   │   │   └── broadcasts.json        # Broadcast metadata
-│   │   ├── pages/
-│   │   │   └── home.tsx              # Main application page
-│   │   └── types/
-│   │       └── broadcast.ts          # TypeScript definitions
-├── attached_assets/              # Broadcast artwork
-├── server/                      # Development server only
-└── dist/                       # Production build output
-```
-
-## Data Model
-
-### Broadcast Schema
-```typescript
-interface Broadcast {
-  id: number;           // Unique identifier
-  cid: string;          // IPFS Content Identifier
-  title: string;        // Display name
-  fileSizeMB: number;   // File size in megabytes
-  date: string;         // Broadcast date (YYYY-MM-DD)
-  imageCid?: string;    // Optional artwork filename
-  createdAt: Date;      // Timestamp
-}
-```
-
-### Data Flow
-1. JSON file loaded at application startup
-2. Broadcasts sorted chronologically (newest first)
-3. Media streamed directly from IPFS via Pinata Gateway
-4. Images served from local assets with IPFS fallback
-
-## Component Architecture
-
-### StreamingPlayer
-- **Purpose**: Netflix-style hero player with background artwork
-- **Features**: Full-screen media display, gradient overlays, responsive design
-- **Props**: Current broadcast, navigation controls, playback state
-
-### BroadcastList
-- **Purpose**: Scrollable archive with year filtering
-- **Features**: Thumbnail display, year filters, infinite scroll, search
-- **State**: Filter state, display count, loading states
-
-### MediaPlayer
-- **Purpose**: Audio/video controls with waveform visualization
-- **Features**: Play/pause, seek, volume, next/previous navigation
-- **Integration**: HTML5 audio/video elements with custom controls
-
-### WaveformVisualizer
-- **Purpose**: Dynamic audio visualization during playback
-- **Implementation**: CSS animations with randomized bar heights
-- **Performance**: Hardware-accelerated transforms
-
-## IPFS Integration
-
-### Gateway Configuration
-```javascript
-const IPFS_GATEWAY = 'https://gateway.pinata.cloud/ipfs/';
-const mediaUrl = `${IPFS_GATEWAY}${broadcast.cid}`;
-```
-
-### Content Delivery
-- **Audio/Video**: Direct streaming from IPFS gateway
-- **Images**: Local assets with CID-based naming
-- **Fallback**: San Francisco Golden Gate Bridge imagery
-
-### Performance Optimization
-- **Preloading**: Next/previous broadcasts preloaded
-- **Caching**: Browser caching for static assets
-- **Lazy Loading**: Images loaded on demand
-
-## State Management
-
-### Local State (React Hooks)
-```typescript
-const [selectedBroadcast, setSelectedBroadcast] = useState<Broadcast | null>(null);
-const [isPlaying, setIsPlaying] = useState(false);
-const [broadcasts, setBroadcasts] = useState<Broadcast[]>([]);
-```
-
-### Derived State
-- **Filtered Broadcasts**: Year-based filtering
-- **Sorted Broadcasts**: Chronological ordering
-- **Display State**: Loading, error, success states
-
-### No External State Management
-- Complexity avoided by using React's built-in state
-- Props drilling minimized through component composition
-- State lifted only when necessary
-
-## Build System
-
-### Development
 ```bash
-npm run dev          # Vite dev server with HMR
-```
-
-### Production
-```bash
-npm run build        # Static build to dist/
-npm run serve        # Local preview of build
-```
-
-### Build Output
-- **Static HTML**: Single-page application
-- **Optimized JS**: Code splitting and tree shaking
-- **Optimized CSS**: Purged unused styles
-- **Assets**: Compressed images and fonts
-
-## Performance Characteristics
-
-### Bundle Size
-- **Initial JS**: ~200KB gzipped
-- **CSS**: ~50KB gzipped
-- **Images**: Varies by broadcast artwork
-
-### Runtime Performance
-- **First Paint**: <500ms on fast connections
-- **Interactivity**: <100ms click-to-play
-- **Media Loading**: Dependent on IPFS gateway speed
-
-### Optimization Strategies
-- **Code Splitting**: Route-based chunks
-- **Image Optimization**: WebP with fallbacks
-- **CSS Optimization**: Tailwind purging
-- **Caching**: Service worker for static assets
-
-## Deployment Options
-
-### Static Hosting
-- **Replit Deployments**: Zero-config deployment
-- **Vercel**: Git-based deployment
-- **Netlify**: Drag-and-drop or Git integration
-- **GitHub Pages**: Actions-based deployment
-
-### Configuration
-No environment variables or build-time configuration required.
-
-## Security Considerations
-
-### Content Security Policy
-```html
-<meta http-equiv="Content-Security-Policy" 
-      content="default-src 'self'; 
-               media-src 'self' https://gateway.pinata.cloud; 
-               img-src 'self' data: https://gateway.pinata.cloud;">
-```
-
-### IPFS Security
-- **Gateway Trust**: Reliance on Pinata gateway availability
-- **Content Integrity**: IPFS provides cryptographic verification
-- **Privacy**: No user data stored or transmitted
-
-## Monitoring & Analytics
-
-### Performance Monitoring
-- **Core Web Vitals**: LCP, FID, CLS tracking
-- **Media Metrics**: Play rate, completion rate
-- **Error Tracking**: Failed loads, network errors
-
-### User Analytics
-- **Play Patterns**: Most popular broadcasts
-- **User Flow**: Navigation patterns
-- **Device Analytics**: Mobile vs desktop usage
-
-## Maintenance & Updates
-
-### Content Updates
-1. Upload new broadcasts to IPFS
-2. Add artwork to `attached_assets/`
-3. Update `broadcasts.json`
-4. Rebuild and deploy
-
-### Code Updates
-1. Develop in feature branches
-2. Test with existing broadcast data
-3. Build and deploy static assets
-4. Monitor for issues
-
-## Testing Strategy
-
-### Unit Tests
-- Component rendering
-- State management
-- Utility functions
-
-### Integration Tests
-- Media playback
-- Navigation flow
-- Filter functionality
-
-### Performance Tests
-- Bundle size analysis
-- Runtime performance
-- Memory usage monitoring
-
-## Browser Support
-
-### Modern Browsers
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
-
-### Media Format Support
-- **Audio**: MP3, AAC, OGG
-- **Video**: MP4, WebM
-- **Images**: JPEG, PNG, WebP
-
-## Future Considerations
-
-### Potential Enhancements
-- **Offline Support**: Service worker caching
-- **Audio Visualization**: Web Audio API integration
-- **Search**: Full-text search across broadcasts
-- **Playlists**: User-created playlists
-
-### Scaling Considerations
-- **CDN Integration**: Global content delivery
-- **Database Migration**: If metadata grows large
-- **API Layer**: If dynamic features needed
-
-## Development Workflow
-
-### Local Development
-```bash
-git clone [repository]
+git clone [your-repository]
 npm install
 npm run dev
 ```
 
-### Adding Features
-1. Create component in `client/src/components/`
-2. Add types in `client/src/types/`
-3. Update routing in `client/src/App.tsx`
-4. Test with existing broadcast data
+Visit `http://localhost:5173` to start streaming.
 
-### Deployment
-```bash
-npm run build
-# Deploy dist/ folder to hosting service
+## Architecture
+
+### Core Components
+- **StreamingPlayer**: Main hero player with full-screen display
+- **BroadcastList**: Scrollable archive with filtering
+- **MediaPlayer**: Audio controls with waveform visualization
+- **WaveformVisualizer**: Dynamic audio visualization
+
+### Technology Stack
+- **Frontend**: React 18 + TypeScript + Tailwind CSS
+- **Storage**: IPFS for media, local JSON for metadata
+- **Build**: Vite for fast development and production builds
+- **Gateway**: Pinata for reliable IPFS access
+
+## Project Structure
+
+```
+├── client/src/
+│   ├── components/          # React components
+│   ├── data/
+│   │   └── broadcasts.json  # Broadcast metadata
+│   └── types/              # TypeScript definitions
+├── attached_assets/        # Local artwork files
+└── dist/                  # Production build
 ```
 
-This architecture provides a robust foundation for streaming media applications while maintaining simplicity and performance.
+## Data Model
+
+Each broadcast follows this structure:
+
+```typescript
+interface Broadcast {
+  id: number;
+  cid: string;           // IPFS Content Identifier
+  title: string;
+  fileSizeMB: number;
+  date: string;          // YYYY-MM-DD format
+  imageCid?: string;     // Optional artwork
+  createdAt: Date;
+}
+```
+
+## Adding Content
+
+1. Upload audio files to IPFS
+2. Add artwork to `attached_assets/`
+3. Update `broadcasts.json` with new entries:
+
+```json
+{
+  "id": 1,
+  "cid": "QmYourIPFSHash",
+  "title": "Your Broadcast Title",
+  "fileSizeMB": 25.4,
+  "date": "2024-01-15",
+  "imageCid": "your-artwork.jpg",
+  "createdAt": "2024-01-15T10:00:00Z"
+}
+```
+
+4. Rebuild and deploy
+
+## Deployment
+
+Build the static files:
+
+```bash
+npm run build
+```
+
+Deploy the `dist/` folder to any static hosting service:
+- **Replit**: Zero-config deployment
+- **Vercel**: Connect your Git repository
+- **Netlify**: Drag and drop or Git integration
+- **GitHub Pages**: Use GitHub Actions
+
+## Performance
+
+- **Bundle Size**: ~250KB total (gzipped)
+- **First Paint**: <500ms on fast connections
+- **Media Loading**: Depends on IPFS gateway speed
+- **Browser Support**: Modern browsers (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
+
+## Security
+
+The application implements Content Security Policy to ensure safe media loading from IPFS gateways while preventing XSS attacks. All content integrity is verified through IPFS's cryptographic hashing.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test with existing broadcast data
+5. Submit a pull request
+
+
+
+---
+
+*Built for the decentralized web. Content lives forever on IPFS.*
