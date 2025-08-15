@@ -72,7 +72,7 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
         console.log("Playing audio due to parent state change");
         mediaRef.current.play().catch(error => {
           console.error("Auto-play error:", error);
-          setPlayerState(prev => ({ ...prev, error: error.message }));
+          setPlayerState(prev => ({ ...prev, error: String(error) }));
         });
       } else if (!isPlaying && !mediaRef.current.paused) {
         console.log("Pausing audio due to parent state change");
@@ -109,10 +109,10 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
       onTogglePlay();
     } catch (error) {
       console.error("Playback error:", error);
-      setPlayerState(prev => ({ ...prev, error: error.message }));
+      setPlayerState(prev => ({ ...prev, error: String(error) }));
       toast({
         title: "Playback Error",
-        description: `Unable to play the broadcast: ${error.message}`,
+        description: `Unable to play the broadcast: ${String(error)}`,
         variant: "destructive",
       });
     }
@@ -207,48 +207,48 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
             </div>
 
             {/* Content Overlay */}
-            <div className="relative z-10 w-full p-8 pb-12">
+            <div className="relative z-10 w-full mobile-padding pb-8 sm:pb-12">
               <div className="max-w-4xl">
                 {/* Metadata */}
-                <div className="flex items-center space-x-4 mb-4">
-                  <Badge variant="secondary" className="bg-cousin-orange text-black font-semibold">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-4">
+                  <Badge variant="secondary" className="bg-cousin-orange text-black font-semibold text-responsive-xs">
                     {isVideo ? "Video" : "Audio"}
                   </Badge>
-                  <span className="text-sm text-gray-300">
+                  <span className="text-responsive-xs sm:text-responsive-sm text-gray-300">
                     {new Date(broadcast.date).toLocaleDateString()}
                   </span>
-                  <span className="text-sm text-gray-300">•</span>
-                  <span className="text-sm text-gray-300">{broadcast.fileSizeMB} MB</span>
+                  <span className="hidden sm:inline text-responsive-sm text-gray-300">•</span>
+                  <span className="text-responsive-xs sm:text-responsive-sm text-gray-300">{broadcast.fileSizeMB} MB</span>
                 </div>
 
                 {/* Title */}
-                <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                <h1 className="text-responsive-4xl sm:text-responsive-5xl lg:text-responsive-6xl font-bold mb-4 sm:mb-6 leading-tight">
                   {broadcast.title}
                 </h1>
 
                 {/* Action Buttons */}
-                <div className="flex items-center space-x-4 mb-8">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
                   <Button
                     onClick={togglePlay}
-                    className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-3 rounded-lg font-semibold"
+                    className="bg-white text-black hover:bg-gray-200 btn-mobile rounded-lg font-semibold touch-target"
                     disabled={playerState.isLoading}
                   >
                     {playerState.isLoading ? (
-                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-black mr-2" />
+                      <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-b-2 border-black mr-2" />
                     ) : isPlaying ? (
-                      <Pause className="mr-2" size={24} />
+                      <Pause className="mr-2" size={20} />
                     ) : (
-                      <Play className="mr-2" size={24} />
+                      <Play className="mr-2" size={20} />
                     )}
-                    {isPlaying ? 'Pause' : 'Play'}
+                    <span className="text-responsive-base">{isPlaying ? 'Pause' : 'Play'}</span>
                   </Button>
                   
                   <Button
                     variant="outline"
-                    className="bg-gray-800/80 border-gray-600 text-white hover:bg-gray-700 px-6 py-3"
+                    className="bg-gray-800/80 border-gray-600 text-white hover:bg-gray-700 btn-mobile touch-target"
                   >
-                    <Info className="mr-2" size={20} />
-                    More Info
+                    <Info className="mr-2" size={18} />
+                    <span className="text-responsive-sm">More Info</span>
                   </Button>
                 </div>
 
@@ -266,10 +266,10 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
           </div>
 
           {/* Player Controls Section */}
-          <div className="relative z-10 bg-black/90 backdrop-blur-sm p-6 border-t border-gray-800">
+          <div className="relative z-10 bg-black/90 backdrop-blur-sm mobile-padding border-t border-gray-800">
             {/* Progress Bar */}
-            <div className="mb-6">
-              <div className="flex justify-between text-sm text-gray-400 mb-2">
+            <div className="mb-4 sm:mb-6">
+              <div className="flex justify-between text-responsive-xs sm:text-responsive-sm text-gray-400 mb-2">
                 <span>{formatTime(playerState.currentTime)}</span>
                 <span>{formatTime(playerState.duration)}</span>
               </div>
@@ -287,8 +287,8 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
             </div>
 
             {/* Control Buttons */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
+              <div className="flex items-center space-x-2 sm:space-x-4 overflow-x-auto pb-2 sm:pb-0">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -343,7 +343,7 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
                 </Button>
               </div>
 
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 sm:space-x-4">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -509,12 +509,12 @@ export function StreamingPlayer({ broadcast, onNext, onPrevious, isPlaying, onTo
           </div>
 
           {/* Content Overlay */}
-          <div className="relative z-10 w-full p-8 pb-12">
+          <div className="relative z-10 w-full mobile-padding pb-8 sm:pb-12">
             <div className="max-w-4xl">
-              <h2 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white">
+              <h2 className="text-responsive-4xl sm:text-responsive-5xl lg:text-responsive-6xl font-bold mb-4 sm:mb-6 leading-tight text-white">
                 CousinFM
               </h2>
-              <p className="text-xl text-gray-300 mb-8">
+              <p className="text-responsive-lg sm:text-responsive-xl text-gray-300 mb-6 sm:mb-8">
                 Select a broadcast from our archives
               </p>
               <div className="mt-8">
