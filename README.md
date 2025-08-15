@@ -19,16 +19,6 @@ A decentralized audio streaming application that serves media content directly f
 - ⚡ Fast loading with preloading and caching
 - 🔒 Content Security Policy compliant
 
-## Quick Start
-
-```bash
-git clone [your-repository]
-npm install
-npm run dev
-```
-
-Visit `http://localhost:5173` to start streaming.
-
 ## Architecture
 
 ### Core Components
@@ -70,6 +60,17 @@ interface Broadcast {
   createdAt: Date;
 }
 ```
+## Quick Start
+
+```bash
+git clone [your-repository]
+npm install
+npm run dev
+```
+
+Visit `http://localhost:5173` to start streaming.
+
+
 
 ## Adding Content
 
