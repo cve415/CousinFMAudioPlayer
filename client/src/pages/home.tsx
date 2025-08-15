@@ -19,7 +19,12 @@ export default function Home() {
 
   useEffect(() => {
     // Load broadcasts from local JSON data and sort by date (newest first)
-    const sortedBroadcasts = (broadcastsData as Broadcast[]).sort(
+    const broadcastsWithDates = broadcastsData.map(broadcast => ({
+      ...broadcast,
+      createdAt: new Date(broadcast.createdAt)
+    })) as Broadcast[];
+    
+    const sortedBroadcasts = broadcastsWithDates.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
     setBroadcasts(sortedBroadcasts);
@@ -96,8 +101,12 @@ export default function Home() {
 
   const handleRetry = () => {
     setError(null);
-    // Reload broadcasts from JSON
-    setBroadcasts(broadcastsData as Broadcast[]);
+    // Reload broadcasts from JSON with proper date conversion
+    const broadcastsWithDates = broadcastsData.map(broadcast => ({
+      ...broadcast,
+      createdAt: new Date(broadcast.createdAt)
+    })) as Broadcast[];
+    setBroadcasts(broadcastsWithDates);
   };
 
   return (
