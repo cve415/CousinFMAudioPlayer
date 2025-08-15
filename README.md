@@ -13,7 +13,7 @@ A decentralized audio streaming application that serves media content directly f
 
 - 🎵 Stream audio directly from IPFS
 - 📱 Mobile-first responsive design
-- 🎨 Netflix-style hero player with background artwork
+- 🎨 Netflix-style audio player with background artwork
 - 📅 Year-based filtering and search
 - 🌊 Real-time waveform visualization
 - ⚡ Fast loading with preloading and caching
@@ -32,7 +32,7 @@ Visit `http://localhost:5173` to start streaming.
 ## Architecture
 
 ### Core Components
-- **StreamingPlayer**: Main hero player with full-screen display
+- **StreamingPlayer**: Main audio player with full-screen display
 - **BroadcastList**: Scrollable archive with filtering
 - **MediaPlayer**: Audio controls with waveform visualization
 - **WaveformVisualizer**: Dynamic audio visualization
