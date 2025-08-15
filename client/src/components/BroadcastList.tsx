@@ -71,13 +71,13 @@ export function BroadcastList({
 
   return (
     <aside className="w-full lg:w-80 xl:w-96 bg-black/90 backdrop-blur-sm border-r border-gray-800 overflow-y-auto">
-      <div className="p-6 border-b border-gray-800">
-        <h2 className="text-xl font-bold mb-6 text-white">CousinFM Archive</h2>
+      <div className="mobile-padding border-b border-gray-800">
+        <h2 className="text-responsive-lg sm:text-responsive-xl font-bold mb-4 sm:mb-6 text-white">CousinFM Archive</h2>
         
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
           <button
             onClick={() => setYearFilter("all")}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`touch-target px-3 sm:px-4 py-2 rounded-full text-responsive-xs sm:text-responsive-sm font-medium transition-colors ${
               yearFilter === "all"
                 ? "bg-cousin-orange text-black"
                 : "bg-gray-800 text-gray-300 hover:bg-gray-700"
@@ -89,7 +89,7 @@ export function BroadcastList({
             <button
               key={year}
               onClick={() => setYearFilter(year.toString())}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              className={`touch-target px-3 sm:px-4 py-2 rounded-full text-responsive-xs sm:text-responsive-sm font-medium transition-colors ${
                 yearFilter === year.toString()
                   ? "bg-cousin-orange text-black"
                   : "bg-gray-800 text-gray-300 hover:bg-gray-700"
@@ -101,7 +101,7 @@ export function BroadcastList({
         </div>
       </div>
 
-      <div className="p-4 space-y-4">
+      <div className="mobile-padding space-y-3 sm:space-y-4">
         {displayedBroadcasts.map((broadcast, index) => (
           <div
             key={broadcast.id}
@@ -126,11 +126,11 @@ export function BroadcastList({
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-white text-lg leading-tight mb-2 line-clamp-2">
+                  <h3 className="font-semibold text-white text-responsive-sm sm:text-responsive-base leading-tight mb-2 line-clamp-2">
                     {broadcast.title}
                   </h3>
                   
-                  <div className="flex items-center space-x-3 text-sm text-gray-400 mb-3">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-responsive-xs sm:text-responsive-sm text-gray-400 mb-3">
                     {getFileIcon(broadcast.title)}
                     <span>{formatDate(broadcast.date)}</span>
                     <span>•</span>

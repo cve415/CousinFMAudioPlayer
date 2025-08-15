@@ -72,6 +72,34 @@
   .bg-cousin-dark {
     background-color: var(--cousin-dark);
   }
+
+  /* Dynamic font sizes for mobile responsiveness */
+  .text-responsive-xs { font-size: clamp(0.75rem, 3vw, 0.875rem); }
+  .text-responsive-sm { font-size: clamp(0.875rem, 3.5vw, 1rem); }
+  .text-responsive-base { font-size: clamp(1rem, 4vw, 1.125rem); }
+  .text-responsive-lg { font-size: clamp(1.125rem, 4.5vw, 1.25rem); }
+  .text-responsive-xl { font-size: clamp(1.25rem, 5vw, 1.5rem); }
+  .text-responsive-2xl { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .text-responsive-3xl { font-size: clamp(2rem, 7vw, 2.5rem); }
+  .text-responsive-4xl { font-size: clamp(2.5rem, 8vw, 3rem); }
+  .text-responsive-5xl { font-size: clamp(3rem, 10vw, 4rem); }
+  .text-responsive-6xl { font-size: clamp(3.5rem, 12vw, 5rem); }
+
+  /* Mobile touch targets */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Mobile-optimized spacing */
+  .mobile-padding { padding: clamp(1rem, 4vw, 2rem); }
+  .mobile-margin { margin: clamp(0.5rem, 2vw, 1rem); }
+
+  /* Mobile-friendly button sizes */
+  .btn-mobile {
+    padding: clamp(0.75rem, 3vw, 1rem) clamp(1.5rem, 6vw, 2rem);
+    font-size: clamp(1rem, 4vw, 1.125rem);
+  }
   
   .bg-cousin-gray {
     background-color: var(--cousin-gray);

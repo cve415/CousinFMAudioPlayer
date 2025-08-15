@@ -104,9 +104,9 @@ export default function Home() {
     <div className="min-h-screen bg-black text-white">
       <Header totalBroadcasts={broadcasts.length} />
       
-      <div className="flex flex-col lg:flex-row">
+      <div className="flex flex-col lg:flex-row min-h-screen">
         {/* Streaming Player - Main Content */}
-        <div className="flex-1">
+        <div className="flex-1 pb-20 lg:pb-0">
           <StreamingPlayer
             broadcast={selectedBroadcast}
             onNext={handleNext}
